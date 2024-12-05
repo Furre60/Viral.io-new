@@ -1,12 +1,9 @@
-// script.js
-
-// Import necessary Firebase services from firebase.js
+// Import necessary Firebase functions from firebase.js
 import { auth, signInWithEmailAndPassword } from './firebase.js';
 
 // Function to handle sign-in
 async function signIn(email, password) {
   try {
-    // Check if a user is already signed in
     const user = auth.currentUser;
     if (user) {
       console.log("User is already signed in: ", user);
@@ -14,7 +11,7 @@ async function signIn(email, password) {
       console.log("User signed out.");
     }
 
-    // Proceed with the sign-in
+    // Proceed with sign-in
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log("User signed in: ", userCredential.user);
 
@@ -37,15 +34,4 @@ document.getElementById('sign-in-form').addEventListener('submit', function(even
 
   // Call the signIn function
   signIn(email, password);
-});
-
-// Monitor authentication state changes
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("User signed in:", user);
-  } else {
-    console.log("No user signed in.");
-  }
 });
