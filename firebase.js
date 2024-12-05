@@ -1,21 +1,37 @@
-// Import necessary Firebase components
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-
-// Firebase configuration object
+// Use Firebase CDN instead of importing via NPM
 const firebaseConfig = {
-    apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-    authDomain: "viral-2de41.firebaseapp.com",
-    projectId: "viral-2de41",
-    storageBucket: "viral-2de41.appspot.com",
-    messagingSenderId: "1074723679254",
-    appId: "1:1074723679254:web:03445debbac201072d9937",
-    measurementId: "G-9TYGZN1SSV"
+  apiKey: "your-api-key",
+  authDomain: "your-auth-domain",
+  projectId: "your-project-id",
+  storageBucket: "your-storage-bucket",
+  messagingSenderId: "your-sender-id",
+  appId: "your-app-id"
 };
 
-// Initialize Firebase app
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+// Load Firebase SDK via CDN
+const firebaseConfigScript = document.createElement("script");
+firebaseConfigScript.src = "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+document.head.appendChild(firebaseConfigScript);
 
-// Export auth functions for use in other files
-export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword };
+const firebaseAuthScript = document.createElement("script");
+firebaseAuthScript.src = "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
+document.head.appendChild(firebaseAuthScript);
+
+firebaseConfigScript.onload = () => {
+  // Initialize Firebase once the script is loaded
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // Sign-in function
+  const signIn = async (email, password) => {
+    try {
+      const userCredential = await auth.signInWithEmailAndPassword(email, password);
+      const user = userCredential.user;
+      console.log('Signed in as:', user.email);
+    } catch (error) {
+      console.error('Error signing in:', error.message);
+    }
+  };
+
+  // You can now call the signIn function with user inputs
+};
