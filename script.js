@@ -3,13 +3,15 @@ document.getElementById("signup-btn").addEventListener("click", () => {
   const email = document.getElementById("signup-email").value;
   const password = document.getElementById("signup-password").value;
 
-  auth.createUserWithEmailAndPassword(email, password)
+  createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
+      // Sign up successful
       alert("Sign Up Successful!");
-      console.log(userCredential.user);
+      window.location.href = "dashboard.html";  // Redirect to dashboard page
     })
     .catch((error) => {
-      alert(`Error: ${error.message}`);
+      // Handle sign-up errors
+      document.getElementById("error-message").innerText = `Error: ${error.message}`;
     });
 });
 
@@ -18,12 +20,37 @@ document.getElementById("login-btn").addEventListener("click", () => {
   const email = document.getElementById("login-email").value;
   const password = document.getElementById("login-password").value;
 
-  auth.signInWithEmailAndPassword(email, password)
+  signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
+      // Log in successful
       alert("Login Successful!");
-      console.log(userCredential.user);
+      window.location.href = "dashboard.html";  // Redirect to dashboard page
     })
     .catch((error) => {
-      alert(`Error: ${error.message}`);
+      // Handle login errors
+      document.getElementById("error-message").innerText = `Error: ${error.message}`;
     });
+});
+
+// Log Out functionality
+document.getElementById("logout-btn").addEventListener("click", () => {
+  signOut(auth).then(() => {
+    // Log out successful
+    alert("Logged Out Successfully!");
+    window.location.href = "index.html";  // Redirect to login/signup page
+  }).catch((error) => {
+    // Handle log out errors
+    alert(`Error: ${error.message}`);
+  });
+});
+
+// Display user info after login/signup
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // If user is logged in, display their email
+    document.getElementById("user-email").innerText = user.email;
+  } else {
+    // User is not logged in
+    console.log("No user signed in");
+  }
 });
