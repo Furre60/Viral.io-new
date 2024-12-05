@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Viral.io is your source for the latest viral content and trends on the web. Stay up-to-date with the hottest topics and news!">
+  <meta name="keywords" content="viral, content, trends, news, viral videos, latest updates">
+  <meta name="author" content="Viral.io">
   <title>Viral.io</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
   <!-- Header Section -->
   <header>
@@ -15,6 +16,12 @@
     <h1>Welcome to Viral.io!</h1>
     <p>Your innovative website for viral content!</p>
   </header>
+
+  <!-- Main Content Section -->
+  <section>
+    <h2>Discover the Latest Viral Trends</h2>
+    <p>Stay ahead with our trending content, automatically generated and shared at the best times.</p>
+  </section>
 
   <!-- Trending Content Section -->
   <section id="trending">
@@ -35,23 +42,34 @@
     </div>
   </section>
 
-  <!-- Latest Updates Section -->
-  <section id="latest-updates">
-    <h2>Latest Updates</h2>
-    <div class="updates">
-      <div class="update-item">
-        <img src="images/update1.jpg" alt="Update 1">
-        <p>Latest Viral News 1</p>
+  <!-- Image Slideshow Section -->
+  <section id="slideshow">
+    <h2>Explore More</h2>
+    <div class="slideshow-container">
+      <div class="mySlides fade">
+        <img src="images/slideshow1.jpg" alt="Slideshow Image 1">
       </div>
-      <div class="update-item">
-        <img src="images/update2.jpg" alt="Update 2">
-        <p>Latest Viral News 2</p>
+      <div class="mySlides fade">
+        <img src="images/slideshow2.jpg" alt="Slideshow Image 2">
       </div>
-      <div class="update-item">
-        <img src="images/update3.jpg" alt="Update 3">
-        <p>Latest Viral News 3</p>
+      <div class="mySlides fade">
+        <img src="images/slideshow3.jpg" alt="Slideshow Image 3">
       </div>
     </div>
+  </section>
+
+  <!-- Contact Form Section -->
+  <section id="contact">
+    <h2>Contact Us</h2>
+    <form action="https://formspree.io/f/mayzjzoy" method="POST">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
   </section>
 
   <!-- Footer Section -->
@@ -59,6 +77,24 @@
     <p>&copy; 2024 Viral.io. All rights reserved.</p>
     <p>Contact us at info@viral.io</p>
   </footer>
-</body>
 
+  <script>
+    let slideIndex = 0;
+
+    function showSlides() {
+      let slides = document.getElementsByClassName("mySlides");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {
+        slideIndex = 1;
+      }
+      slides[slideIndex - 1].style.display = "block";
+      setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+
+    showSlides();
+  </script>
+</body>
 </html>
