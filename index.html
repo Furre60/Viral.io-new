@@ -7,17 +7,24 @@
 </head>
 <body>
   <h1>Sign In</h1>
+
+  <!-- Sign In Form -->
   <form id="sign-in-form">
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
     <button type="submit">Sign In</button>
   </form>
 
-  <button id="sign-out-button" style="display: none;">Sign Out</button>
-  
-  <div id="error-message" style="color: red;"></div>
+  <!-- Sign Out Button -->
+  <button id="sign-out-button" style="display:none;">Sign Out</button>
 
-  <script type="module" src="firebase.js"></script>
+  <!-- Forgot Password Link -->
+  <a href="#" id="forgot-password-link">Forgot Password?</a>
+
+  <!-- User Info Display -->
+  <div id="user-info"></div>
+
+  <!-- Add Firebase Scripts -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
