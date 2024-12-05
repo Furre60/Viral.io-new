@@ -1,4 +1,16 @@
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "./firebase.js";
+// Initialize Firebase with the already loaded Firebase CDN
+const firebaseConfig = {
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
+  authDomain: "viral-2de41.firebaseapp.com",
+  projectId: "viral-2de41",
+  storageBucket: "viral-2de41.firebasestorage.app",
+  messagingSenderId: "1074723679254",
+  appId: "1:1074723679254:web:03445debbac201072d9937",
+  measurementId: "G-9TYGZN1SSV"
+};
+
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
 // Get DOM elements
 const signupEmail = document.getElementById("signup-email");
@@ -14,7 +26,7 @@ signupBtn.addEventListener("click", () => {
   const email = signupEmail.value;
   const password = signupPassword.value;
 
-  createUserWithEmailAndPassword(auth, email, password)
+  firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       messageDiv.textContent = `Sign-Up Successful! Welcome, ${user.email}`;
@@ -33,7 +45,7 @@ loginBtn.addEventListener("click", () => {
   const email = loginEmail.value;
   const password = loginPassword.value;
 
-  signInWithEmailAndPassword(auth, email, password)
+  firebase.auth().signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       const user = userCredential.user;
       messageDiv.textContent = `Log-In Successful! Welcome back, ${user.email}`;
