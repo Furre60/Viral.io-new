@@ -34,7 +34,7 @@ async function signIn(email, password) {
     console.log("User signed in: ", userCredential.user);
 
     // Redirect to the dashboard after sign-in (optional)
-    window.location.href = 'dashboard.html';
+    window.location.href = 'dashboard.html'; // This can be any valid page URL
 
   } catch (error) {
     console.error("Error signing in: ", error.message);
