@@ -1,37 +1,20 @@
-// Use Firebase CDN instead of importing via NPM
+// firebase.js
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+// Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-auth-domain",
-  projectId: "your-project-id",
-  storageBucket: "your-storage-bucket",
-  messagingSenderId: "your-sender-id",
-  appId: "your-app-id"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
-// Load Firebase SDK via CDN
-const firebaseConfigScript = document.createElement("script");
-firebaseConfigScript.src = "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-document.head.appendChild(firebaseConfigScript);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-const firebaseAuthScript = document.createElement("script");
-firebaseAuthScript.src = "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
-document.head.appendChild(firebaseAuthScript);
-
-firebaseConfigScript.onload = () => {
-  // Initialize Firebase once the script is loaded
-  const app = firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-
-  // Sign-in function
-  const signIn = async (email, password) => {
-    try {
-      const userCredential = await auth.signInWithEmailAndPassword(email, password);
-      const user = userCredential.user;
-      console.log('Signed in as:', user.email);
-    } catch (error) {
-      console.error('Error signing in:', error.message);
-    }
-  };
-
-  // You can now call the signIn function with user inputs
-};
+// Export the functions you need
+export { auth, signInWithEmailAndPassword };
