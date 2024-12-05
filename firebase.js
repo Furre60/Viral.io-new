@@ -1,21 +1,29 @@
-// Import necessary Firebase components
+// Importing Firebase SDKs
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-// Firebase configuration object
+// Your Firebase config (replace with your actual Firebase config)
 const firebaseConfig = {
-    apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-    authDomain: "viral-2de41.firebaseapp.com",
-    projectId: "viral-2de41",
-    storageBucket: "viral-2de41.appspot.com",
-    messagingSenderId: "1074723679254",
-    appId: "1:1074723679254:web:03445debbac201072d9937",
-    measurementId: "G-9TYGZN1SSV"
+  apiKey: "your-api-key",
+  authDomain: "your-auth-domain",
+  projectId: "your-project-id",
+  storageBucket: "your-storage-bucket",
+  messagingSenderId: "your-sender-id",
+  appId: "your-app-id"
 };
 
-// Initialize Firebase app
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Export auth functions for use in other files
-export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword };
+// Sign in function
+export const signIn = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log('Signed in as:', user.email);
+    // Handle post-sign-in logic here (e.g., redirect)
+  } catch (error) {
+    console.error('Error signing in:', error.message);
+  }
+};
