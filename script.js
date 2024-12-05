@@ -1,6 +1,6 @@
 // Import necessary Firebase functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
 // Your Firebase configuration
@@ -25,9 +25,11 @@ async function signIn(email, password) {
     const user = auth.currentUser;
     if (user) {
       console.log("User is already signed in: ", user);
-      return; // Exit if user is already signed in
+      await auth.signOut(); // Sign out the current user before signing in again
+      console.log("User signed out.");
     }
 
+    // Proceed with sign-in
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log("User signed in: ", userCredential.user);
 
