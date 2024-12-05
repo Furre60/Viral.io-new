@@ -1,18 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Viral.io</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css"> <!-- Your styles if you have one -->
 </head>
+
 <body>
   <h1>Welcome to Viral.io</h1>
   <p>Your platform to create and share viral content.</p>
 
-  <!-- Your Firebase and JavaScript code here -->
+  <!-- Your Firebase script -->
   <script type="module">
-    // Firebase script code here
+    // Import the functions you need from the Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID",
+      measurementId: "YOUR_MEASUREMENT_ID"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    // Example sign-up and sign-in
+    async function signUp(email, password) {
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        console.log("User signed up: ", userCredential.user);
+      } catch (error) {
+        console.error("Error signing up: ", error.message);
+      }
+    }
+
+    async function signIn(email, password) {
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        console.log("User signed in: ", userCredential.user);
+      } catch (error) {
+        console.error("Error signing in: ", error.message);
+      }
+    }
+
+    // Example usage
+    signUp('test@example.com', 'password123');
+    signIn('test@example.com', 'password123');
   </script>
 </body>
+
 </html>
