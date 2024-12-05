@@ -5,30 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Viral.io</title>
   <link rel="stylesheet" href="style.css">
+  <script type="module" src="firebase.js" defer></script>
+  <script type="module" src="script.js" defer></script>
 </head>
 <body>
-
-  <!-- Sign Up Form -->
-  <div id="signup-container">
-    <h2>Sign Up</h2>
-    <input type="email" id="signup-email" placeholder="Enter email" required>
-    <input type="password" id="signup-password" placeholder="Enter password" required>
-    <button id="signup-btn">Sign Up</button>
+  <div class="container">
+    <h1>Welcome to Viral.io</h1>
+    
+    <!-- Sign Up Form -->
+    <div class="form-container">
+      <h2>Sign Up</h2>
+      <input type="email" id="signup-email" placeholder="Enter email" required>
+      <input type="password" id="signup-password" placeholder="Enter password" required>
+      <button id="signup-btn">Sign Up</button>
+    </div>
+    
+    <!-- Log In Form -->
+    <div class="form-container">
+      <h2>Log In</h2>
+      <input type="email" id="login-email" placeholder="Enter email" required>
+      <input type="password" id="login-password" placeholder="Enter password" required>
+      <button id="login-btn">Log In</button>
+    </div>
   </div>
-
-  <!-- Log In Form -->
-  <div id="login-container">
-    <h2>Log In</h2>
-    <input type="email" id="login-email" placeholder="Enter email" required>
-    <input type="password" id="login-password" placeholder="Enter password" required>
-    <button id="login-btn">Log In</button>
-  </div>
-
-  <!-- Error Message -->
-  <div id="error-message" style="color: red;"></div>
-
-  <script src="firebase.js"></script>
-  <script src="script.js"></script>
-
+  
+  <div class="message" id="message"></div>
 </body>
 </html>
