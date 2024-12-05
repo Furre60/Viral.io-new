@@ -1,9 +1,8 @@
-// Import Firebase App and other necessary modules first
+// Step 1: Import Firebase SDK (App and Analytics)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-// Firebase configuration
+// Step 2: Firebase Configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
   authDomain: "viral-2de41.firebaseapp.com",
@@ -14,17 +13,18 @@ const firebaseConfig = {
   measurementId: "G-9TYGZN1SSV"
 };
 
-// Initialize Firebase
+// Step 3: Initialize Firebase App
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const analytics = getAnalytics(app);  // This initializes Firebase Analytics
 
-// Initialize Firebase Authentication
+// Step 4: Import and Initialize Firebase Authentication
+import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 const auth = getAuth();
 
-// Sign-in function
+// Step 5: Sign-In Function (Example)
 async function signIn(email, password) {
   try {
-    // Make sure the email and password are non-empty and valid
+    // Make sure email and password are valid
     if (!email || !password) {
       throw new Error("Email and password are required.");
     }
@@ -32,7 +32,7 @@ async function signIn(email, password) {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log("User signed in: ", userCredential.user);
   } catch (error) {
-    // Improved error handling and logging
+    // Handle errors properly
     if (error.code === 'auth/invalid-credential') {
       console.error("Invalid credentials, please check your email and password.");
     } else if (error.code === 'auth/user-not-found') {
