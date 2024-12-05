@@ -1,6 +1,6 @@
 // Import the functions you need from Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
 // Your Firebase configuration
@@ -26,6 +26,7 @@ async function signUp(email, password) {
     console.log("User signed up: ", userCredential.user);
   } catch (error) {
     console.error("Error signing up: ", error.message);
+    alert("Error signing up: " + error.message);  // Show alert for signup errors
   }
 }
 
@@ -38,15 +39,17 @@ async function signIn(email, password) {
     // window.location.href = '/dashboard'; // Redirect to your desired page
   } catch (error) {
     // Improved error handling
+    console.error("Error signing in: ", error.message);
+    alert("Error signing in: " + error.message);  // Show alert for sign-in errors
     if (error.code === 'auth/invalid-credential') {
-      console.error("Invalid credentials, please check your email and password.");
+      alert("Invalid credentials, please check your email and password.");
     } else if (error.code === 'auth/user-not-found') {
       console.log("User not found, attempting sign-up...");
       await signUp(email, password); // Sign up the user if not found
     } else if (error.code === 'auth/wrong-password') {
-      console.error("Incorrect password.");
+      alert("Incorrect password.");
     } else {
-      console.error("Error signing in: ", error.message);
+      alert("Error: " + error.message);
     }
   }
 }
@@ -62,6 +65,3 @@ document.getElementById('sign-in-form').addEventListener('submit', function(even
   // Call the signIn function
   signIn(email, password);
 });
-
-// Example usage: you can also call signIn() directly with hardcoded credentials for testing
-// signIn('test@example.com', 'password123');
