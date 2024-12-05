@@ -7,14 +7,17 @@
 </head>
 <body>
   <h1>Sign In</h1>
-  <!-- Sign-in form -->
   <form id="sign-in-form">
     <input type="email" id="email" placeholder="Email" required>
     <input type="password" id="password" placeholder="Password" required>
     <button type="submit">Sign In</button>
   </form>
 
-  <!-- Import your script.js, which contains Firebase authentication logic -->
+  <button id="sign-out-button" style="display: none;">Sign Out</button>
+  
+  <div id="error-message" style="color: red;"></div>
+
+  <script type="module" src="firebase.js"></script>
   <script type="module" src="script.js"></script>
 </body>
 </html>
