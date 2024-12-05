@@ -5,13 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Viral.io</title>
   
-  <!-- Use the correct Firebase CDN -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
-  
+  <!-- Use the correct Firebase CDN for version 9 -->
+  <script type="module">
+    // Import Firebase SDKs using type="module"
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
+      authDomain: "viral-2de41.firebaseapp.com",
+      projectId: "viral-2de41",
+      storageBucket: "viral-2de41.firebasestorage.app",
+      messagingSenderId: "1074723679254",
+      appId: "1:1074723679254:web:03445debbac201072d9937",
+      measurementId: "G-9TYGZN1SSV"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    
+    // DOM Elements
+    const signupEmail = document.getElementById("signup-email");
+    const signupPassword = document.getElementById("signup-password");
+    const loginEmail = document.getElementById("login-email");
+    const loginPassword = document.getElementById("login-password");
+    const signupBtn = document.getElementById("signup-btn");
+    const loginBtn = document.getElementById("login-btn");
+    const messageDiv = document.getElementById("message");
+
+    // Sign Up Function
+    signupBtn.addEventListener("click", () => {
+      const email = signupEmail.value;
+      const password = signupPassword.value;
+      
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          messageDiv.textContent = `Sign-Up Successful! Welcome, ${user.email}`;
+          messageDiv.style.color = "green";
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          messageDiv.textContent = `Error: ${errorMessage}`;
+          messageDiv.style.color = "red";
+        });
+    });
+
+    // Log In Function
+    loginBtn.addEventListener("click", () => {
+      const email = loginEmail.value;
+      const password = loginPassword.value;
+      
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          messageDiv.textContent = `Log-In Successful! Welcome back, ${user.email}`;
+          messageDiv.style.color = "green";
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          messageDiv.textContent = `Error: ${errorMessage}`;
+          messageDiv.style.color = "red";
+        });
+    });
+  </script>
+
   <!-- Link to CSS -->
   <link rel="stylesheet" href="style.css">
-  <script type="module" src="script.js" defer></script>
 </head>
 <body>
   <div class="container">
