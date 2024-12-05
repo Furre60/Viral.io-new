@@ -1,43 +1,73 @@
-// dashboard.js
-
-// Import necessary Firebase functions
+// Import Firebase functions
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-// Your Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-  authDomain: "viral-2de41.firebaseapp.com",
-  projectId: "viral-2de41",
-  storageBucket: "viral-2de41.firebasestorage.app",
-  messagingSenderId: "1074723679254",
-  appId: "1:1074723679254:web:03445debbac201072d9937",
-  measurementId: "G-9TYGZN1SSV"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); // Get the Auth instance
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Display user information and handle sign-out
+// DOM Elements
+const profilePicture = document.getElementById("profile-picture");
+const userDetails = document.getElementById("user-details");
+const signOutButton = document.getElementById("sign-out-btn");
+const editProfile = document.getElementById("edit-profile");
+
+// Fetch user details
+const loadUserProfile = async (user) => {
+  const defaultProfilePicture = "https://via.placeholder.com/100";
+  const userProfileRef = doc(db, "users", user.uid); // Assuming you have a 'users' collection in Firestore
+  const userProfileSnap = await getDoc(userProfileRef);
+
+  if (userProfileSnap.exists()) {
+    const userData = userProfileSnap.data();
+    profilePicture.style.backgroundImage = `url(${userData.profilePicture || defaultProfilePicture})`;
+    userDetails.innerHTML = `
+      <strong>Email:</strong> ${user.email}<br>
+      <strong>Joined:</strong> ${new Date(user.metadata.creationTime).toDateString()}<br>
+      ${userData.bio ? `<strong>Bio:</strong> ${userData.bio}` : ""}
+    `;
+  } else {
+    profilePicture.style.backgroundImage = `url(${defaultProfilePicture})`;
+    userDetails.innerHTML = `
+      <strong>Email:</strong> ${user.email}<br>
+      <strong>Joined:</strong> ${new Date(user.metadata.creationTime).toDateString()}<br>
+      <strong>Bio:</strong> Add your bio in the "Edit Profile" section.
+    `;
+  }
+};
+
+// Monitor authentication state
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    // Display user email on the dashboard
-    document.getElementById('user-email').innerText = `Welcome, ${user.email}`;
+    loadUserProfile(user);
   } else {
-    // If no user is signed in, redirect to the sign-in page
-    window.location.href = 'index.html';
+    window.location.href = "index.html";
   }
 });
 
-// Handle sign-out functionality
-document.getElementById('sign-out-btn').addEventListener('click', async () => {
+// Sign-out button functionality
+signOutButton.addEventListener("click", async () => {
   try {
     await signOut(auth);
-    console.log("User signed out.");
-    window.location.href = 'index.html'; // Redirect to sign-in page
+    window.location.href = "index.html";
   } catch (error) {
     console.error("Error signing out: ", error.message);
-    alert("Error signing out: " + error.message); // Show alert for errors
   }
+});
+
+// Edit profile (redirect to another page or show a modal)
+editProfile.addEventListener("click", () => {
+  alert("Edit Profile feature coming soon!");
 });
