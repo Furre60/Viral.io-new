@@ -1,56 +1,48 @@
-// Sign Up functionality
-document.getElementById("signup-btn").addEventListener("click", () => {
-  const email = document.getElementById("signup-email").value;
-  const password = document.getElementById("signup-password").value;
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "./firebase.js";
+
+// Get DOM elements
+const signupEmail = document.getElementById("signup-email");
+const signupPassword = document.getElementById("signup-password");
+const loginEmail = document.getElementById("login-email");
+const loginPassword = document.getElementById("login-password");
+const signupBtn = document.getElementById("signup-btn");
+const loginBtn = document.getElementById("login-btn");
+const messageDiv = document.getElementById("message");
+
+// Sign Up Function
+signupBtn.addEventListener("click", () => {
+  const email = signupEmail.value;
+  const password = signupPassword.value;
 
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Sign up successful
-      alert("Sign Up Successful!");
-      window.location.href = "dashboard.html";  // Redirect to dashboard page
+      const user = userCredential.user;
+      messageDiv.textContent = `Sign-Up Successful! Welcome, ${user.email}`;
+      messageDiv.style.color = "green";
     })
     .catch((error) => {
-      // Handle sign-up errors
-      document.getElementById("error-message").innerText = `Error: ${error.message}`;
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      messageDiv.textContent = `Error: ${errorMessage}`;
+      messageDiv.style.color = "red";
     });
 });
 
-// Log In functionality
-document.getElementById("login-btn").addEventListener("click", () => {
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
+// Log In Function
+loginBtn.addEventListener("click", () => {
+  const email = loginEmail.value;
+  const password = loginPassword.value;
 
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      // Log in successful
-      alert("Login Successful!");
-      window.location.href = "dashboard.html";  // Redirect to dashboard page
+      const user = userCredential.user;
+      messageDiv.textContent = `Log-In Successful! Welcome back, ${user.email}`;
+      messageDiv.style.color = "green";
     })
     .catch((error) => {
-      // Handle login errors
-      document.getElementById("error-message").innerText = `Error: ${error.message}`;
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      messageDiv.textContent = `Error: ${errorMessage}`;
+      messageDiv.style.color = "red";
     });
-});
-
-// Log Out functionality
-document.getElementById("logout-btn").addEventListener("click", () => {
-  signOut(auth).then(() => {
-    // Log out successful
-    alert("Logged Out Successfully!");
-    window.location.href = "index.html";  // Redirect to login/signup page
-  }).catch((error) => {
-    // Handle log out errors
-    alert(`Error: ${error.message}`);
-  });
-});
-
-// Display user info after login/signup
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    // If user is logged in, display their email
-    document.getElementById("user-email").innerText = user.email;
-  } else {
-    // User is not logged in
-    console.log("No user signed in");
-  }
 });
