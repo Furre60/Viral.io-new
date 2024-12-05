@@ -1,10 +1,23 @@
 // dashboard.js
 
 // Import necessary Firebase functions
-import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-// Get Firebase authentication instance
-const auth = getAuth();
+// Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
+  authDomain: "viral-2de41.firebaseapp.com",
+  projectId: "viral-2de41",
+  storageBucket: "viral-2de41.firebasestorage.app",
+  messagingSenderId: "1074723679254",
+  appId: "1:1074723679254:web:03445debbac201072d9937",
+  measurementId: "G-9TYGZN1SSV"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app); // Get the Auth instance
 
 // Display user information and handle sign-out
 onAuthStateChanged(auth, (user) => {
@@ -25,6 +38,6 @@ document.getElementById('sign-out-btn').addEventListener('click', async () => {
     window.location.href = 'index.html'; // Redirect to sign-in page
   } catch (error) {
     console.error("Error signing out: ", error.message);
-    alert("Error signing out: " + error.message);  // Show alert for errors
+    alert("Error signing out: " + error.message); // Show alert for errors
   }
 });
