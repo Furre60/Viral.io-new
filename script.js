@@ -1,8 +1,9 @@
-// Step 1: Import Firebase SDK (App and Analytics)
+// Import the functions you need from Firebase SDK
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
-// Step 2: Firebase Configuration
+// Your Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
   authDomain: "viral-2de41.firebaseapp.com",
@@ -13,41 +14,54 @@ const firebaseConfig = {
   measurementId: "G-9TYGZN1SSV"
 };
 
-// Step 3: Initialize Firebase App
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);  // This initializes Firebase Analytics
-
-// Step 4: Import and Initialize Firebase Authentication
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+const analytics = getAnalytics(app);
 const auth = getAuth();
 
-// Step 5: Sign-In Function (Example)
+// Sign up function
+async function signUp(email, password) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    console.log("User signed up: ", userCredential.user);
+  } catch (error) {
+    console.error("Error signing up: ", error.message);
+  }
+}
+
+// Sign in function
 async function signIn(email, password) {
   try {
-    // Make sure email and password are valid
-    if (!email || !password) {
-      throw new Error("Email and password are required.");
-    }
-    
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log("User signed in: ", userCredential.user);
+    // Optionally redirect after successful sign-in
+    // window.location.href = '/dashboard'; // Redirect to your desired page
   } catch (error) {
-    // Handle errors properly
+    // Improved error handling
     if (error.code === 'auth/invalid-credential') {
       console.error("Invalid credentials, please check your email and password.");
     } else if (error.code === 'auth/user-not-found') {
-      console.error("No user found with this email.");
+      console.log("User not found, attempting sign-up...");
+      await signUp(email, password); // Sign up the user if not found
     } else if (error.code === 'auth/wrong-password') {
       console.error("Incorrect password.");
     } else {
       console.error("Error signing in: ", error.message);
     }
-
-    console.error("Full error details: ", error);
   }
 }
 
-// Example usage
-const email = 'test@example.com';
-const password = 'password123';
-signIn(email, password);
+// Event listener for the sign-in form
+document.getElementById('sign-in-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form from refreshing the page
+
+  // Get the email and password from the form inputs
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  // Call the signIn function
+  signIn(email, password);
+});
+
+// Example usage: you can also call signIn() directly with hardcoded credentials for testing
+// signIn('test@example.com', 'password123');
