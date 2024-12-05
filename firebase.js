@@ -1,8 +1,7 @@
-// firebase.js
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import firebase from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+import "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 
-// Your Firebase configuration
+// Firebase configuration (replace with your Firebase project config)
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
     authDomain: "YOUR_AUTH_DOMAIN",
@@ -13,8 +12,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-// Export the functions you need
-export { auth, signInWithEmailAndPassword };
+export { auth };
