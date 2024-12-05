@@ -7,8 +7,7 @@ async function signIn(email, password) {
     const user = auth.currentUser;
     if (user) {
       console.log("User is already signed in: ", user);
-      await auth.signOut(); // Sign out the current user before signing in again
-      console.log("User signed out.");
+      return; // Exit the function if the user is already signed in
     }
 
     // Proceed with sign-in
