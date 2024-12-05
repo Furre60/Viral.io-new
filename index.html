@@ -1,63 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Viral.io</title>
-  <link rel="stylesheet" href="styles.css"> <!-- Your styles if you have one -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral.io - Sign Up / Sign In</title>
 </head>
-
 <body>
-  <h1>Welcome to Viral.io</h1>
-  <p>Your platform to create and share viral content.</p>
+    <h1>Welcome to Viral.io</h1>
+    <p>Your platform to create and share viral content.</p>
 
-  <!-- Your Firebase script -->
-  <script type="module">
-    // Import the functions you need from the Firebase SDK
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    <!-- Sign Up / Sign In Form -->
+    <div>
+        <h2>Sign Up / Sign In</h2>
+        <form id="auth-form">
+            <input type="email" id="email" placeholder="Email" required /><br />
+            <input type="password" id="password" placeholder="Password" required /><br />
+            <button type="submit">Sign Up / Sign In</button>
+        </form>
+    </div>
 
-    // Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-    authDomain: "viral-2de41.firebaseapp.com",
-    projectId: "viral-2de41",
-    storageBucket: "viral-2de41.firebasestorage.app",
-    messagingSenderId: "1074723679254",
-    appId: "1:1074723679254:web:03445debbac201072d9937",
-    measurementId: "G-9TYGZN1SSV"
-  };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
-
-    // Example sign-up and sign-in
-    async function signUp(email, password) {
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-        console.log("User signed up: ", userCredential.user);
-      } catch (error) {
-        console.error("Error signing up: ", error.message);
-      }
-    }
-
-    async function signIn(email, password) {
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log("User signed in: ", userCredential.user);
-      } catch (error) {
-        console.error("Error signing in: ", error.message);
-      }
-    }
-
-    // Example usage
-    signUp('test@example.com', 'password123');
-    signIn('test@example.com', 'password123');
-  </script>
+    <!-- Script -->
+    <script type="module" src="script.js"></script>
 </body>
-
 </html>
