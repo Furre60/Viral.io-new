@@ -1,28 +1,44 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f5f5f5;
-}
-
+/* Header */
 header {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #333;
   padding: 20px;
   text-align: center;
 }
 
+header img {
+  width: 150px;
+}
+
+header h1 {
+  color: #fff;
+  font-size: 2em;
+}
+
+header p {
+  color: #ddd;
+}
+
+/* Main Content */
+section {
+  margin: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+section h2 {
+  font-size: 1.8em;
+  color: #333;
+}
+
+section p {
+  font-size: 1.2em;
+  color: #555;
+}
+
+/* Footer */
 footer {
-  background-color: #333;
-  color: white;
   text-align: center;
   padding: 10px;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-section {
-  padding: 20px;
-  text-align: center;
+  background-color: #333;
+  color: white;
 }
