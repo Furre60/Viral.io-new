@@ -1,9 +1,27 @@
-// Import the functions you need from Firebase SDK
+// Import Firebase App and other necessary modules first
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
+  authDomain: "viral-2de41.firebaseapp.com",
+  projectId: "viral-2de41",
+  storageBucket: "viral-2de41.firebasestorage.app",
+  messagingSenderId: "1074723679254",
+  appId: "1:1074723679254:web:03445debbac201072d9937",
+  measurementId: "G-9TYGZN1SSV"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 // Initialize Firebase Authentication
 const auth = getAuth();
 
+// Sign-in function
 async function signIn(email, password) {
   try {
     // Make sure the email and password are non-empty and valid
@@ -33,19 +51,3 @@ async function signIn(email, password) {
 const email = 'test@example.com';
 const password = 'password123';
 signIn(email, password);
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-  authDomain: "viral-2de41.firebaseapp.com",
-  projectId: "viral-2de41",
-  storageBucket: "viral-2de41.firebasestorage.app",
-  messagingSenderId: "1074723679254",
-  appId: "1:1074723679254:web:03445debbac201072d9937",
-  measurementId: "G-9TYGZN1SSV"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
