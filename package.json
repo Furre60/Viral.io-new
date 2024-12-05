@@ -1,17 +1,32 @@
 {
-  "name": "Viral.io",
+  "name": "viral-io",
   "version": "1.0.0",
+  "description": "A project for Viral.io",
+  "main": "index.js",
   "scripts": {
-    "start": "live-server"
+    "start": "node server.js",
+    "build": "npm run build",
+    "test": "npm run test"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "firebase": "^9.23.0",
-=======
-    "firebase": "^9.0.0"
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "axios": "^1.0.0",
+    "express": "^4.17.1"
   },
   "devDependencies": {
->>>>>>> 2145bbaf4d858ee5ce015ded337162ffa8a659ff
-    "live-server": "^1.2.1"
+    "webpack": "^5.70.0",
+    "webpack-cli": "^4.9.0",
+    "babel-loader": "^8.2.2",
+    "eslint": "^8.0.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Furre60/Viral.io-new.git"
   }
 }
