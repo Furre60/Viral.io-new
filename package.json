@@ -5,7 +5,13 @@
     "start": "live-server"
   },
   "dependencies": {
+<<<<<<< HEAD
     "firebase": "^9.23.0",
+=======
+    "firebase": "^9.0.0"
+  },
+  "devDependencies": {
+>>>>>>> 2145bbaf4d858ee5ce015ded337162ffa8a659ff
     "live-server": "^1.2.1"
   }
 }

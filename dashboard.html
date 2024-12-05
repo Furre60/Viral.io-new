@@ -1,32 +1,29 @@
+<!-- dashboard.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>User Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>Welcome to your Dashboard</h1>
+    <p>You are now signed in!</p>
 
-  <div class="dashboard-container">
-    <h2>Welcome, <span id="user-email"></span></h2>
-    
-    <!-- Display a logout button -->
-    <button id="logout-btn">Log Out</button>
+    <!-- Add any dashboard content here -->
+    <button id="signOutButton">Sign Out</button>
 
-    <!-- Additional features can be added here, like Uploading videos, viewing analytics, etc. -->
-    <div class="dashboard-actions">
-      <h3>Your Actions:</h3>
-      <ul>
-        <li><a href="#">Upload a Video</a></li>
-        <li><a href="#">View Analytics</a></li>
-        <li><a href="#">Update Profile</a></li>
-      </ul>
-    </div>
-  </div>
+    <script type="module">
+        import { auth } from './firebase.js';
 
-  <script src="firebase.js"></script>
-  <script src="script.js"></script>
-  
+        // Sign out function
+        const signOutButton = document.getElementById('signOutButton');
+        signOutButton.addEventListener('click', async () => {
+            await auth.signOut();
+            window.location.href = "index.html"; // Redirect to the sign-in page
+        });
+    </script>
 </body>
 </html>
