@@ -28,6 +28,7 @@ async function signUp(email, password) {
       signIn(email, password); // Try to sign the user in instead
     } else {
       console.error("Error signing up: ", error.message);
+      console.error("Full error details: ", error);  // Log full error object for more insights
     }
   }
 }
@@ -39,8 +40,10 @@ async function signIn(email, password) {
     console.log("User signed in: ", userCredential.user);
   } catch (error) {
     console.error("Error signing in: ", error.message);
+    console.error("Full error details: ", error);  // Log full error object for more insights
   }
 }
+
 
 // Handle form submission
 document.getElementById("auth-form").addEventListener("submit", (event) => {
