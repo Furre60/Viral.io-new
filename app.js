@@ -1,3 +1,7 @@
+// Import the necessary Firebase services from the modular SDK
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js";
+
 // Firebase Configuration (replace with your own config)
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -9,12 +13,12 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
 // Sign-Up Function
 function signUp(email, password) {
-    auth.createUserWithEmailAndPassword(email, password)
+    createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
             console.log("User signed up:", user);
@@ -28,7 +32,7 @@ function signUp(email, password) {
 
 // Sign-In Function
 function signIn(email, password) {
-    auth.signInWithEmailAndPassword(email, password)
+    signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             const user = userCredential.user;
             console.log("User signed in:", user);
