@@ -1,44 +1,130 @@
-/* Header */
-header {
-  background-color: #333;
-  padding: 20px;
-  text-align: center;
-}
-
-header img {
-  width: 150px;
-}
-
-header h1 {
-  color: #fff;
-  font-size: 2em;
-}
-
-header p {
-  color: #ddd;
-}
-
-/* Main Content */
-section {
-  margin: 20px;
-  padding: 20px;
-  background-color: #f4f4f4;
-}
-
-section h2 {
-  font-size: 1.8em;
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f7f7f7;
   color: #333;
 }
 
-section p {
-  font-size: 1.2em;
-  color: #555;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 10px;
+header {
   background-color: #333;
   color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+header img {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+p {
+  font-size: 1.2rem;
+}
+
+section {
+  padding: 50px 0;
+  margin: 0 20px;
+}
+
+h2 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: white;
+}
+
+/* Trending Content Section */
+#trending {
+  margin: 50px 0;
+  text-align: center;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.item {
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px;
+}
+
+.item img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.item p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.item:hover {
+  background-color: #eaeaea;
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Latest Updates Section */
+#latest-updates {
+  margin: 50px 0;
+  text-align: center;
+}
+
+.updates {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.update-item {
+  background-color: #f4f4f4;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px;
+}
+
+.update-item img {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.update-item p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.update-item:hover {
+  background-color: #eaeaea;
+  transform: translateY(-5px);
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .content, .updates {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .item, .update-item {
+    width: 90%;
+  }
 }
