@@ -1,8 +1,21 @@
 // Import necessary Firebase functions
-import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged, initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
-// Initialize Firebase Authentication
-const auth = getAuth();
+// Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
+  authDomain: "viral-2de41.firebaseapp.com",
+  projectId: "viral-2de41",
+  storageBucket: "viral-2de41.firebasestorage.app",
+  messagingSenderId: "1074723679254",
+  appId: "1:1074723679254:web:03445debbac201072d9937",
+  measurementId: "G-9TYGZN1SSV"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);  // Now `getAuth` will work as expected
 
 // Function to handle sign-in
 async function signIn(email, password) {
