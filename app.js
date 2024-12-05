@@ -1,42 +1,58 @@
-// Import necessary Firebase SDKs
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
-
-// Your Firebase configuration (replace with your actual credentials)
+// Firebase Configuration (replace with your own config)
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID"
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-const storage = getStorage(app);
+const app = firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-// Example: Fetching data from Firestore
-async function fetchVideos() {
-  const videoList = document.getElementById("video-list");
-
-  // Firestore query to fetch video data (replace with your collection and document names)
-  const querySnapshot = await db.collection("videos").get();
-  
-  querySnapshot.forEach((doc) => {
-    const videoData = doc.data();
-    const videoElement = document.createElement("div");
-    videoElement.innerHTML = `
-      <h3>${videoData.title}</h3>
-      <video src="${videoData.url}" controls></video>
-    `;
-    videoList.appendChild(videoElement);
-  });
+// Sign-Up Function
+function signUp(email, password) {
+    auth.createUserWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("User signed up:", user);
+            alert("Sign-up successful! You can now sign in.");
+        })
+        .catch((error) => {
+            console.error("Error signing up:", error.message);
+            alert("Error signing up: " + error.message);
+        });
 }
 
-// Call the function to fetch videos
-fetchVideos();
+// Sign-In Function
+function signIn(email, password) {
+    auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("User signed in:", user);
+            alert("Sign-in successful!");
+            // Redirect to a dashboard or another page
+        })
+        .catch((error) => {
+            console.error("Error signing in:", error.message);
+            alert("Error signing in: " + error.message);
+        });
+}
+
+// Handle Sign-Up Form Submission
+document.getElementById("signUpForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("signUpEmail").value;
+    const password = document.getElementById("signUpPassword").value;
+    signUp(email, password);
+});
+
+// Handle Sign-In Form Submission
+document.getElementById("signInForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const email = document.getElementById("signInEmail").value;
+    const password = document.getElementById("signInPassword").value;
+    signIn(email, password);
+});
