@@ -1,81 +1,55 @@
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-
-const auth = getAuth();
-const storage = getStorage();
+import { auth } from './firebase.js';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 // Sign Up Function
 function signUp(email, password) {
+  console.log("Sign Up function called with", email, password); // Debug log
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log("User signed up:", userCredential.user);
-      // Show upload form and hide other forms
+      // Show Upload Form
       document.getElementById('signUpForm').style.display = 'none';
       document.getElementById('logInForm').style.display = 'none';
       document.getElementById('uploadForm').style.display = 'block';
     })
     .catch((error) => {
       console.error("Error signing up:", error.message);
+      alert(error.message); // Show error message to the user
     });
 }
 
 // Log In Function
 function logIn(email, password) {
+  console.log("Log In function called with", email, password); // Debug log
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log("User logged in:", userCredential.user);
-      // Show upload form and hide other forms
+      // Show Upload Form
       document.getElementById('signUpForm').style.display = 'none';
       document.getElementById('logInForm').style.display = 'none';
       document.getElementById('uploadForm').style.display = 'block';
     })
     .catch((error) => {
       console.error("Error logging in:", error.message);
+      alert(error.message); // Show error message to the user
     });
 }
 
-// Video Upload Function
-function uploadVideo(file) {
-  const storageRef = ref(storage, 'videos/' + file.name);
-  uploadBytes(storageRef, file).then((snapshot) => {
-    console.log('Uploaded a video!', snapshot);
-  }).catch((error) => {
-    console.error("Error uploading video:", error.message);
-  });
-}
-
-// Event Listeners
-document.getElementById('signUp').addEventListener('submit', (e) => {
+// Attach Event Listeners to Forms
+document.getElementById('signUpForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const email = e.target.email.value;
   const password = e.target.password.value;
   signUp(email, password);
 });
 
-document.getElementById('logIn').addEventListener('submit', (e) => {
+document.getElementById('logInForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const email = e.target.email.value;
   const password = e.target.password.value;
   logIn(email, password);
 });
-
-document.getElementById('uploadVideo').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const file = e.target.file.files[0];
-  uploadVideo(file);
-});
-
-// Handle auth state change
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is logged in
-    document.getElementById('signUpForm').style.display = 'none';
-    document.getElementById('logInForm').style.display = 'none';
-    document.getElementById('uploadForm').style.display = 'block';
-  } else {
-    // User is not logged in
-    document.getElementById('signUpForm').style.display = 'block';
-    document.getElementById('logInForm').style.display = 'block';
+lementById('logInForm').style.display = 'block';
     document.getElementById('uploadForm').style.display = 'none';
   }
 });
