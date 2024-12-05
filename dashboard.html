@@ -1,29 +1,23 @@
-<!-- dashboard.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
 </head>
 <body>
-    <h1>Welcome to your Dashboard</h1>
-    <p>You are now signed in!</p>
-
-    <!-- Add any dashboard content here -->
-    <button id="signOutButton">Sign Out</button>
-
-    <script type="module">
-        import { auth } from './firebase.js';
-
-        // Sign out function
-        const signOutButton = document.getElementById('signOutButton');
-        signOutButton.addEventListener('click', async () => {
-            await auth.signOut();
-            window.location.href = "index.html"; // Redirect to the sign-in page
-        });
-    </script>
+  <h1>Welcome to your Dashboard</h1>
+  <button id="logout">Logout</button>
+  
+  <script type="module">
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    
+    const auth = getAuth();
+    
+    document.getElementById('logout').addEventListener('click', async () => {
+      await signOut(auth);
+      window.location.href = '/'; // Redirect to login page
+    });
+  </script>
 </body>
 </html>
