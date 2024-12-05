@@ -1,50 +1,18 @@
-<script type="module">
-  // Import the necessary functions from Firebase SDK
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viral.io</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Welcome to Viral.io</h1>
+  <p>Your platform to create and share viral content.</p>
 
-  // Firebase configuration for your app
-  const firebaseConfig = {
-    apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-    authDomain: "viral-2de41.firebaseapp.com",
-    projectId: "viral-2de41",
-    storageBucket: "viral-2de41.firebasestorage.app",
-    messagingSenderId: "1074723679254",
-    appId: "1:1074723679254:web:03445debbac201072d9937",
-    measurementId: "G-9TYGZN1SSV"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const auth = getAuth(app);
-
-  // Sign-up function
-  async function signUp(email, password) {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log("User signed up: ", userCredential.user);
-    } catch (error) {
-      console.error("Error signing up: ", error.message);
-    }
-  }
-
-  // Sign-in function
-  async function signIn(email, password) {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log("User signed in: ", userCredential.user);
-    } catch (error) {
-      console.error("Error signing in: ", error.message);
-    }
-  }
-
-  // Example calls to the functions
-  // Call these when the user submits a form or presses a button
-  const email = "test@example.com";
-  const password = "password123";
-
-  signUp(email, password);
-  signIn(email, password);
-</script>
+  <!-- Your Firebase and JavaScript code here -->
+  <script type="module">
+    // Firebase script code here
+  </script>
+</body>
+</html>
