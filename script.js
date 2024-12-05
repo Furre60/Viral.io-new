@@ -1,19 +1,25 @@
 // script.js
-import { auth, signInWithEmailAndPassword } from './firebase.js';
 
-// Function to handle the sign-in process
-const signIn = async (email, password) => {
+import { auth } from './firebase.js';
+
+// Sign in function
+const signInButton = document.getElementById('signInButton');
+
+signInButton.addEventListener('click', async () => {
+    const email = prompt("Enter your email:");
+    const password = prompt("Enter your password:");
+
     try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        console.log("User signed in:", userCredential);
-    } catch (error) {
-        console.error("Error signing in:", error);
-    }
-};
+        // Sign in with Firebase authentication
+        const userCredential = await auth.signInWithEmailAndPassword(email, password);
+        const user = userCredential.user;
+        console.log('User signed in:', user);
 
-// Event listener for the sign-in button
-document.getElementById('signInButton').addEventListener('click', () => {
-    const email = 'user@example.com';  // Replace with dynamic input
-    const password = 'password123';    // Replace with dynamic input
-    signIn(email, password);
+        // Redirect to another page after successful sign-in
+        window.location.href = "dashboard.html";  // Replace "dashboard.html" with your desired page
+
+    } catch (error) {
+        console.error('Error signing in:', error.message);
+        alert('Error: ' + error.message);
+    }
 });
