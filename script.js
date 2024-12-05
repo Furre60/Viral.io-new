@@ -1,6 +1,6 @@
-// Import the functions you need from Firebase SDK
+// Import necessary Firebase functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
 
 // Your Firebase configuration
@@ -19,38 +19,24 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth();
 
-// Sign up function
-async function signUp(email, password) {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log("User signed up: ", userCredential.user);
-  } catch (error) {
-    console.error("Error signing up: ", error.message);
-    alert("Error signing up: " + error.message);  // Show alert for signup errors
-  }
-}
-
-// Sign in function
+// Function to handle sign-in
 async function signIn(email, password) {
   try {
+    const user = auth.currentUser;
+    if (user) {
+      console.log("User is already signed in: ", user);
+      return; // Exit if user is already signed in
+    }
+
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log("User signed in: ", userCredential.user);
-    // Optionally redirect after successful sign-in
+
+    // Optionally, you can redirect to a dashboard after successful sign-in
     // window.location.href = '/dashboard'; // Redirect to your desired page
+
   } catch (error) {
-    // Improved error handling
     console.error("Error signing in: ", error.message);
-    alert("Error signing in: " + error.message);  // Show alert for sign-in errors
-    if (error.code === 'auth/invalid-credential') {
-      alert("Invalid credentials, please check your email and password.");
-    } else if (error.code === 'auth/user-not-found') {
-      console.log("User not found, attempting sign-up...");
-      await signUp(email, password); // Sign up the user if not found
-    } else if (error.code === 'auth/wrong-password') {
-      alert("Incorrect password.");
-    } else {
-      alert("Error: " + error.message);
-    }
+    alert("Error signing in: " + error.message);  // Show alert for errors
   }
 }
 
@@ -64,4 +50,13 @@ document.getElementById('sign-in-form').addEventListener('submit', function(even
 
   // Call the signIn function
   signIn(email, password);
+});
+
+// Monitor authentication state changes
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("User signed in:", user);
+  } else {
+    console.log("No user signed in.");
+  }
 });
