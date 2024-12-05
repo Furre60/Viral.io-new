@@ -1,5 +1,6 @@
 body {
   font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,40 +8,49 @@ body {
   margin: 0;
 }
 
-#signup-container, #login-container {
-  width: 300px;
-  margin: 20px;
+.container {
+  background-color: white;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
 }
 
-h2 {
+h1 {
   text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-container {
+  margin-bottom: 15px;
 }
 
 input {
   width: 100%;
   padding: 10px;
-  margin: 10px 0;
+  margin: 5px 0;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  border-radius: 5px;
 }
 
 button {
   width: 100%;
   padding: 10px;
-  background-color: #28a745;
+  background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #218838;
+  background-color: #45a049;
 }
 
-#error-message {
-  color: red;
+.message {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #333;
 }
