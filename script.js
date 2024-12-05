@@ -1,60 +1,50 @@
-// Initialize Firebase with the already loaded Firebase CDN
-const firebaseConfig = {
-  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-  authDomain: "viral-2de41.firebaseapp.com",
-  projectId: "viral-2de41",
-  storageBucket: "viral-2de41.firebasestorage.app",
-  messagingSenderId: "1074723679254",
-  appId: "1:1074723679254:web:03445debbac201072d9937",
-  measurementId: "G-9TYGZN1SSV"
-};
-
-const app = firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-
-// Get DOM elements
+// DOM elements
 const signupEmail = document.getElementById("signup-email");
 const signupPassword = document.getElementById("signup-password");
+const signupBtn = document.getElementById("signup-btn");
+const signupMessage = document.getElementById("signup-message");
+
 const loginEmail = document.getElementById("login-email");
 const loginPassword = document.getElementById("login-password");
-const signupBtn = document.getElementById("signup-btn");
 const loginBtn = document.getElementById("login-btn");
-const messageDiv = document.getElementById("message");
+const loginMessage = document.getElementById("login-message");
 
-// Sign Up Function
+// Sign-up functionality
 signupBtn.addEventListener("click", () => {
-  const email = signupEmail.value;
-  const password = signupPassword.value;
-
-  firebase.auth().createUserWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      messageDiv.textContent = `Sign-Up Successful! Welcome, ${user.email}`;
-      messageDiv.style.color = "green";
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      messageDiv.textContent = `Error: ${errorMessage}`;
-      messageDiv.style.color = "red";
-    });
+    const email = signupEmail.value;
+    const password = signupPassword.value;
+    
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log('Sign-Up Success:', user);
+            signupMessage.textContent = `Sign-Up Successful! Welcome, ${user.email}`;
+            signupMessage.style.color = "green";
+        })
+        .catch((error) => {
+            const errorMessage = error.message;
+            console.error('Sign-Up Error:', errorMessage);
+            signupMessage.textContent = `Error: ${errorMessage}`;
+            signupMessage.style.color = "red";
+        });
 });
 
-// Log In Function
+// Login functionality
 loginBtn.addEventListener("click", () => {
-  const email = loginEmail.value;
-  const password = loginPassword.value;
-
-  firebase.auth().signInWithEmailAndPassword(email, password)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      messageDiv.textContent = `Log-In Successful! Welcome back, ${user.email}`;
-      messageDiv.style.color = "green";
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      messageDiv.textContent = `Error: ${errorMessage}`;
-      messageDiv.style.color = "red";
-    });
+    const email = loginEmail.value;
+    const password = loginPassword.value;
+    
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log('Login Success:', user);
+            loginMessage.textContent = `Login Successful! Welcome back, ${user.email}`;
+            loginMessage.style.color = "green";
+        })
+        .catch((error) => {
+            const errorMessage = error.message;
+            console.error('Login Error:', errorMessage);
+            loginMessage.textContent = `Error: ${errorMessage}`;
+            loginMessage.style.color = "red";
+        });
 });
