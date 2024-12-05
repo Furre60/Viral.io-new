@@ -1,34 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Viral.io</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viral.io</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <h1>Welcome to Viral.io</h1>
 
-  <!-- Sign Up Form -->
-  <div id="signup-container">
+    <!-- Sign-Up Form -->
     <h2>Sign Up</h2>
-    <input type="email" id="signup-email" placeholder="Enter email" required>
-    <input type="password" id="signup-password" placeholder="Enter password" required>
+    <input type="email" id="signup-email" placeholder="Enter email">
+    <input type="password" id="signup-password" placeholder="Enter password">
     <button id="signup-btn">Sign Up</button>
-  </div>
+    <p id="signup-message"></p>
 
-  <!-- Log In Form -->
-  <div id="login-container">
+    <!-- Log-In Form -->
     <h2>Log In</h2>
-    <input type="email" id="login-email" placeholder="Enter email" required>
-    <input type="password" id="login-password" placeholder="Enter password" required>
+    <input type="email" id="login-email" placeholder="Enter email">
+    <input type="password" id="login-password" placeholder="Enter password">
     <button id="login-btn">Log In</button>
-  </div>
+    <p id="login-message"></p>
 
-  <!-- Error Message -->
-  <div id="error-message" style="color: red;"></div>
-
-  <script src="firebase.js"></script>
-  <script src="script.js"></script>
-
+    <!-- Scripts -->
+    <script type="module" src="script.js"></script>
 </body>
 </html>

@@ -1,56 +1,53 @@
-// Sign Up functionality
-document.getElementById("signup-btn").addEventListener("click", () => {
-  const email = document.getElementById("signup-email").value;
-  const password = document.getElementById("signup-password").value;
+// Import Firebase authentication functions
+import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from './firebase.js';
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Sign up successful
-      alert("Sign Up Successful!");
-      window.location.href = "dashboard.html";  // Redirect to dashboard page
-    })
-    .catch((error) => {
-      // Handle sign-up errors
-      document.getElementById("error-message").innerText = `Error: ${error.message}`;
-    });
+// Get DOM elements for sign-up and login
+const signupEmail = document.getElementById('signup-email');
+const signupPassword = document.getElementById('signup-password');
+const signupBtn = document.getElementById('signup-btn');
+const signupMessage = document.getElementById('signup-message');
+
+const loginEmail = document.getElementById('login-email');
+const loginPassword = document.getElementById('login-password');
+const loginBtn = document.getElementById('login-btn');
+const loginMessage = document.getElementById('login-message');
+
+// Handle Sign-Up Button Click
+signupBtn.addEventListener('click', () => {
+    const email = signupEmail.value;
+    const password = signupPassword.value;
+
+    createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log('Sign-Up Success:', user);
+            signupMessage.textContent = `Sign-Up Successful! Welcome, ${user.email}`;
+            signupMessage.style.color = 'green';
+        })
+        .catch((error) => {
+            const errorMessage = error.message;
+            console.error('Sign-Up Error:', errorMessage);
+            signupMessage.textContent = `Error: ${errorMessage}`;
+            signupMessage.style.color = 'red';
+        });
 });
 
-// Log In functionality
-document.getElementById("login-btn").addEventListener("click", () => {
-  const email = document.getElementById("login-email").value;
-  const password = document.getElementById("login-password").value;
+// Handle Log-In Button Click
+loginBtn.addEventListener('click', () => {
+    const email = loginEmail.value;
+    const password = loginPassword.value;
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // Log in successful
-      alert("Login Successful!");
-      window.location.href = "dashboard.html";  // Redirect to dashboard page
-    })
-    .catch((error) => {
-      // Handle login errors
-      document.getElementById("error-message").innerText = `Error: ${error.message}`;
-    });
-});
-
-// Log Out functionality
-document.getElementById("logout-btn").addEventListener("click", () => {
-  signOut(auth).then(() => {
-    // Log out successful
-    alert("Logged Out Successfully!");
-    window.location.href = "index.html";  // Redirect to login/signup page
-  }).catch((error) => {
-    // Handle log out errors
-    alert(`Error: ${error.message}`);
-  });
-});
-
-// Display user info after login/signup
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    // If user is logged in, display their email
-    document.getElementById("user-email").innerText = user.email;
-  } else {
-    // User is not logged in
-    console.log("No user signed in");
-  }
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            const user = userCredential.user;
+            console.log('Login Success:', user);
+            loginMessage.textContent = `Login Successful! Welcome back, ${user.email}`;
+            loginMessage.style.color = 'green';
+        })
+        .catch((error) => {
+            const errorMessage = error.message;
+            console.error('Login Error:', errorMessage);
+            loginMessage.textContent = `Error: ${errorMessage}`;
+            loginMessage.style.color = 'red';
+        });
 });
