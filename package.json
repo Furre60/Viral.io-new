@@ -5,7 +5,9 @@
     "start": "live-server"
   },
   "dependencies": {
-    "firebase": "^9.0.0",
+    "firebase": "^9.0.0"
+  },
+  "devDependencies": {
     "live-server": "^1.2.1"
   }
 }
