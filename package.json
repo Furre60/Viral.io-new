@@ -5,16 +5,7 @@
     "start": "live-server"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "firebase": "^11.0.2"
-  },
-  "devDependencies": {
-    "live-server": "^1.2.2"
-=======
-    "firebase": "^9.0.0"
-  },
-  "devDependencies": {
+    "firebase": "^9.0.0",
     "live-server": "^1.2.1"
->>>>>>> 2e4413202d2464fb55f8070e9ca8eb6366ccb7bf
   }
 }
