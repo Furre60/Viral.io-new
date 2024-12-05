@@ -1,5 +1,4 @@
-// Initialize Firebase
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const auth = getAuth();
@@ -10,8 +9,10 @@ function signUp(email, password) {
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log("User signed up:", userCredential.user);
-      document.getElementById('signUpForm').style.display = 'none'; // Hide sign-up form
-      document.getElementById('uploadForm').style.display = 'block'; // Show upload form
+      // Show upload form and hide other forms
+      document.getElementById('signUpForm').style.display = 'none';
+      document.getElementById('logInForm').style.display = 'none';
+      document.getElementById('uploadForm').style.display = 'block';
     })
     .catch((error) => {
       console.error("Error signing up:", error.message);
@@ -23,8 +24,10 @@ function logIn(email, password) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       console.log("User logged in:", userCredential.user);
-      document.getElementById('logInForm').style.display = 'none'; // Hide login form
-      document.getElementById('uploadForm').style.display = 'block'; // Show upload form
+      // Show upload form and hide other forms
+      document.getElementById('signUpForm').style.display = 'none';
+      document.getElementById('logInForm').style.display = 'none';
+      document.getElementById('uploadForm').style.display = 'block';
     })
     .catch((error) => {
       console.error("Error logging in:", error.message);
@@ -60,5 +63,20 @@ document.getElementById('uploadVideo').addEventListener('submit', (e) => {
   e.preventDefault();
   const file = e.target.file.files[0];
   uploadVideo(file);
+});
+
+// Handle auth state change
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is logged in
+    document.getElementById('signUpForm').style.display = 'none';
+    document.getElementById('logInForm').style.display = 'none';
+    document.getElementById('uploadForm').style.display = 'block';
+  } else {
+    // User is not logged in
+    document.getElementById('signUpForm').style.display = 'block';
+    document.getElementById('logInForm').style.display = 'block';
+    document.getElementById('uploadForm').style.display = 'none';
+  }
 });
 
