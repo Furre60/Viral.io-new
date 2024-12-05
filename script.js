@@ -1,17 +1,14 @@
-import { signIn } from './firebase.js';
+// script.js
+import { auth, signInWithEmailAndPassword } from './firebase.js';
 
-// Get the form and inputs
-const loginForm = document.getElementById('login-form');
-const emailInput = document.getElementById('email');
-const passwordInput = document.getElementById('password');
+const signIn = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log("User signed in:", userCredential);
+  } catch (error) {
+    console.error("Error signing in:", error);
+  }
+};
 
-// Handle form submission
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const email = emailInput.value;
-  const password = passwordInput.value;
-
-  // Sign in with Firebase
-  signIn(email, password);
-});
+// Call the signIn function as needed
+signIn('user@example.com', 'password123');
