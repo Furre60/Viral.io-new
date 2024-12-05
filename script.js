@@ -1,27 +1,12 @@
-// Import necessary Firebase functions
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+// script.js
 
-// Your Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-  authDomain: "viral-2de41.firebaseapp.com",
-  projectId: "viral-2de41",
-  storageBucket: "viral-2de41.firebasestorage.app",
-  messagingSenderId: "1074723679254",
-  appId: "1:1074723679254:web:03445debbac201072d9937",
-  measurementId: "G-9TYGZN1SSV"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth();
+// Import necessary Firebase services from firebase.js
+import { auth, signInWithEmailAndPassword } from './firebase.js';
 
 // Function to handle sign-in
 async function signIn(email, password) {
   try {
+    // Check if a user is already signed in
     const user = auth.currentUser;
     if (user) {
       console.log("User is already signed in: ", user);
@@ -29,7 +14,7 @@ async function signIn(email, password) {
       console.log("User signed out.");
     }
 
-    // Proceed with sign-in
+    // Proceed with the sign-in
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log("User signed in: ", userCredential.user);
 
@@ -55,6 +40,8 @@ document.getElementById('sign-in-form').addEventListener('submit', function(even
 });
 
 // Monitor authentication state changes
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User signed in:", user);
