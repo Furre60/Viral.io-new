@@ -1,56 +1,56 @@
-import { auth } from './firebase.js';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+// Sign Up functionality
+document.getElementById("signup-btn").addEventListener("click", () => {
+  const email = document.getElementById("signup-email").value;
+  const password = document.getElementById("signup-password").value;
 
-// Sign Up Function
-function signUp(email, password) {
-  console.log("Sign Up function called with", email, password); // Debug log
   createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      console.log("User signed up:", userCredential.user);
-      // Show Upload Form
-      document.getElementById('signUpForm').style.display = 'none';
-      document.getElementById('logInForm').style.display = 'none';
-      document.getElementById('uploadForm').style.display = 'block';
+      // Sign up successful
+      alert("Sign Up Successful!");
+      window.location.href = "dashboard.html";  // Redirect to dashboard page
     })
     .catch((error) => {
-      console.error("Error signing up:", error.message);
-      alert(error.message); // Show error message to the user
+      // Handle sign-up errors
+      document.getElementById("error-message").innerText = `Error: ${error.message}`;
     });
-}
+});
 
-// Log In Function
-function logIn(email, password) {
-  console.log("Log In function called with", email, password); // Debug log
+// Log In functionality
+document.getElementById("login-btn").addEventListener("click", () => {
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      console.log("User logged in:", userCredential.user);
-      // Show Upload Form
-      document.getElementById('signUpForm').style.display = 'none';
-      document.getElementById('logInForm').style.display = 'none';
-      document.getElementById('uploadForm').style.display = 'block';
+      // Log in successful
+      alert("Login Successful!");
+      window.location.href = "dashboard.html";  // Redirect to dashboard page
     })
     .catch((error) => {
-      console.error("Error logging in:", error.message);
-      alert(error.message); // Show error message to the user
+      // Handle login errors
+      document.getElementById("error-message").innerText = `Error: ${error.message}`;
     });
-}
-
-// Attach Event Listeners to Forms
-document.getElementById('signUpForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = e.target.email.value;
-  const password = e.target.password.value;
-  signUp(email, password);
 });
 
-document.getElementById('logInForm').addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = e.target.email.value;
-  const password = e.target.password.value;
-  logIn(email, password);
+// Log Out functionality
+document.getElementById("logout-btn").addEventListener("click", () => {
+  signOut(auth).then(() => {
+    // Log out successful
+    alert("Logged Out Successfully!");
+    window.location.href = "index.html";  // Redirect to login/signup page
+  }).catch((error) => {
+    // Handle log out errors
+    alert(`Error: ${error.message}`);
+  });
 });
-lementById('logInForm').style.display = 'block';
-    document.getElementById('uploadForm').style.display = 'none';
+
+// Display user info after login/signup
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    // If user is logged in, display their email
+    document.getElementById("user-email").innerText = user.email;
+  } else {
+    // User is not logged in
+    console.log("No user signed in");
   }
 });
-
