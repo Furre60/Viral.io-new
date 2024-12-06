@@ -1,59 +1,49 @@
-// profile.js
-import { getAuth, updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
-import app from './firebase.js';  // Import firebase initialization
+import { auth, db, storage } from './firebase.js';
+import { updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from 'firebase/auth';
+import { ref, uploadBytes } from 'firebase/storage';
 
-const auth = getAuth(app);
-
-// Get DOM elements
-const displayNameInput = document.getElementById('display-name');
-const passwordInput = document.getElementById('password');
-const currentPasswordInput = document.getElementById('current-password');
-const profilePicInput = document.getElementById('profile-pic');
 const updateProfileBtn = document.getElementById('update-profile-btn');
+const displayNameInput = document.getElementById('display-name');
+const currentPasswordInput = document.getElementById('current-password');
+const newPasswordInput = document.getElementById('new-password');
+const profilePicInput = document.getElementById('profile-pic');
 
-// Handle profile update when button is clicked
 updateProfileBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
 
   if (!user) {
-    alert("You need to be logged in to update your profile.");
+    alert("User is not signed in!");
     return;
   }
 
   const newDisplayName = displayNameInput.value.trim();
-  const newPassword = passwordInput.value.trim();
-  const currentPassword = currentPasswordInput.value.trim();  // Get current password
+  const currentPassword = currentPasswordInput.value.trim();
+  const newPassword = newPasswordInput.value.trim();
+  const profilePicFile = profilePicInput.files[0];
 
   try {
+    // Re-authenticate the user if updating password
+    if (newPassword) {
+      const credential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, credential);
+      await updatePassword(user, newPassword);
+      alert('Password updated successfully!');
+    }
+
+    // Update the display name
     if (newDisplayName) {
       await updateProfile(user, { displayName: newDisplayName });
       alert('Display name updated successfully!');
     }
 
-    if (newPassword) {
-      if (!currentPassword) {
-        alert("Please enter your current password to change the password.");
-        return;
-      }
-
-      const userCredential = EmailAuthProvider.credential(user.email, currentPassword);
-      await reauthenticateWithCredential(user, userCredential);  // Reauthenticate to change password
-      await updatePassword(user, newPassword);
-      alert('Password updated successfully!');
-    }
-
-    // Handle profile picture upload if selected
-    if (profilePicInput.files.length > 0) {
-      const file = profilePicInput.files[0];
-      const storage = getStorage();
+    // Upload profile picture
+    if (profilePicFile) {
       const profilePicRef = ref(storage, `profile_pics/${user.uid}`);
-      await uploadBytes(profilePicRef, file);
+      await uploadBytes(profilePicRef, profilePicFile);
       alert('Profile picture updated successfully!');
     }
-
   } catch (error) {
-    console.error("Error updating profile: ", error.message);
-    alert("Error updating profile: " + error.message);
+    console.error('Error updating profile:', error.message);
+    alert('Error updating profile: ' + error.message);
   }
 });
