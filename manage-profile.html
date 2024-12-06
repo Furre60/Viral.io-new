@@ -7,30 +7,35 @@
 </head>
 <body>
   <h1>Manage Profile</h1>
-  <form>
-    <div class="form-group">
-      <label for="display-name">Display Name</label>
-      <input type="text" id="display-name" placeholder="Enter your display name">
-    </div>
-    
-    <div class="form-group">
-      <label for="current-password">Current Password</label>
-      <input type="password" id="current-password" placeholder="Enter your current password">
-    </div>
-    
-    <div class="form-group">
-      <label for="new-password">New Password</label>
-      <input type="password" id="new-password" placeholder="Enter your new password">
-    </div>
-    
-    <div class="form-group">
-      <label for="profile-pic">Profile Picture</label>
-      <input type="file" id="profile-pic">
-    </div>
+  
+  <!-- Form for updating profile -->
+  <div class="form-group">
+    <label for="display-name">Display Name</label>
+    <input type="text" id="display-name" placeholder="Enter new display name">
+  </div>
 
-    <button type="button" id="update-profile-btn">Update Profile</button>
-  </form>
+  <!-- Current Password (Required for password change) -->
+  <div class="form-group">
+    <label for="current-password">Current Password</label>
+    <input type="password" id="current-password" placeholder="Enter your current password" required>
+  </div>
 
+  <!-- New Password (Required for password change) -->
+  <div class="form-group">
+    <label for="new-password">New Password</label>
+    <input type="password" id="new-password" placeholder="Enter a new password">
+  </div>
+
+  <!-- Profile Picture Upload -->
+  <div class="form-group">
+    <label for="profile-pic">Upload Profile Picture</label>
+    <input type="file" id="profile-pic">
+  </div>
+
+  <!-- Update Profile Button -->
+  <button id="update-profile-btn">Update Profile</button>
+
+  <!-- Go back to Dashboard -->
   <a href="dashboard.html">Go Back to Dashboard</a>
 
   <!-- Add Firebase SDKs before your script file -->
@@ -38,7 +43,7 @@
   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js"></script>
 
-  <!-- Your custom script file -->
-  <script src="profile.js"></script>
+  <!-- Your script file -->
+  <script type="module" src="profile.js"></script>
 </body>
 </html>
