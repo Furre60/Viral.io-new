@@ -1,97 +1,61 @@
 // Import necessary Firebase functions
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"; // App initialization
-import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"; // Authentication functions
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js"; // Analytics
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"; 
+import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"; 
 
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
-  authDomain: "viral-2de41.firebaseapp.com",
-  projectId: "viral-2de41",
-  storageBucket: "viral-2de41.firebasestorage.app",
-  messagingSenderId: "1074723679254",
-  appId: "1:1074723679254:web:03445debbac201072d9937",
-  measurementId: "G-9TYGZN1SSV"
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID",
+  measurementId: "YOUR_MEASUREMENT_ID"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const auth = getAuth(app);  // Correctly use getAuth from firebase-auth.js
+const auth = getAuth(app);
 
-// Function to handle sign-in
+// Sign-in functionality
 async function signIn(email, password) {
   try {
-    const user = auth.currentUser;
-    if (user) {
-      console.log("User is already signed in: ", user);
-      await signOut(auth); // Sign out the current user before signing in again
-      console.log("User signed out.");
-    }
-
-    // Proceed with sign-in
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     console.log("User signed in: ", userCredential.user);
-
-    // Redirect to the dashboard after sign-in (optional)
-    window.location.href = 'dashboard.html'; // This can be any valid page URL
-
+    window.location.href = 'dashboard.html'; // Redirect to dashboard
   } catch (error) {
     console.error("Error signing in: ", error.message);
-    alert("Error signing in: " + error.message);  // Show alert for errors
+    alert("Error signing in: " + error.message);
   }
 }
 
-// Event listener for the sign-in form
+// Handle form submission for sign-in
 document.getElementById('sign-in-form').addEventListener('submit', function(event) {
-  event.preventDefault(); // Prevent form from refreshing the page
-
-  // Get the email and password from the form inputs
+  event.preventDefault(); // Prevent form refresh
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-
-  // Call the signIn function
   signIn(email, password);
 });
 
-// Function to handle password reset
-document.getElementById('forgot-password-link').addEventListener('click', async (e) => {
-  e.preventDefault();
+// Password reset
+document.getElementById('forgot-password-link').addEventListener('click', async () => {
   const email = prompt("Enter your email for password reset:");
-
   if (email) {
     try {
       await sendPasswordResetEmail(auth, email);
-      alert("Password reset email sent. Please check your inbox.");
+      alert("Password reset email sent.");
     } catch (error) {
-      console.error("Error sending password reset email: ", error.message);
-      alert("Error sending password reset email.");
+      console.error("Error: ", error.message);
+      alert("Error sending reset email.");
     }
   }
 });
 
-// Monitor authentication state changes
+// Listen for auth state change
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User signed in:", user);
-    // Optionally update the dashboard with user details
-    document.getElementById('user-email').innerText = `Welcome, ${user.email}`;
-    document.getElementById('sign-out-btn').style.display = 'block';
+    document.getElementById('user-email').textContent = `Welcome, ${user.email}`;
   } else {
-    console.log("No user signed in.");
-    document.getElementById('user-email').innerText = "Please sign in.";
-    document.getElementById('sign-out-btn').style.display = 'none';
-  }
-});
-
-// Sign out the user when the "Sign Out" button is clicked
-document.getElementById('sign-out-btn').addEventListener('click', async () => {
-  try {
-    await signOut(auth);
-    console.log("User signed out.");
-    window.location.href = 'index.html'; // Redirect to sign-in page
-  } catch (error) {
-    console.error("Error signing out: ", error.message);
-    alert("Error signing out: " + error.message);  // Show alert for errors
+    window.location.href = 'index.html'; // Redirect to sign-in page if not signed in
   }
 });
