@@ -1,8 +1,8 @@
 // Ensure the script is a module
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-// Your Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
   authDomain: "viral-2de41.firebaseapp.com",
@@ -17,38 +17,50 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-document.addEventListener('DOMContentLoaded', function() {
-  // Ensure all DOM elements are loaded before manipulating them
-  
-  // Get references to the elements
-  const userEmailElement = document.getElementById('user-email');
-  const signOutBtn = document.getElementById('sign-out-btn');
-  
-  // Check if the elements exist before adding event listeners
-  if (userEmailElement && signOutBtn) {
-    // Monitor authentication state changes
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("User signed in:", user);
-        userEmailElement.innerText = `Welcome, ${user.email}`;
-        signOutBtn.style.display = 'block';
-      } else {
-        console.log("No user signed in.");
-        userEmailElement.innerText = "Please sign in.";
-        signOutBtn.style.display = 'none';
-      }
-    });
+// Function to handle sign-in
+async function signIn(email, password) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    console.log("User signed in: ", userCredential.user);
 
-    // Sign out the user when the "Sign Out" button is clicked
-    signOutBtn.addEventListener('click', async () => {
-      try {
-        await signOut(auth);
-        console.log("User signed out.");
-        window.location.href = 'index.html'; // Redirect to sign-in page
-      } catch (error) {
-        console.error("Error signing out: ", error.message);
-        alert("Error signing out: " + error.message);  // Show alert for errors
-      }
-    });
+    // Redirect to the dashboard
+    window.location.href = 'dashboard.html'; // Make sure the path is correct
+
+  } catch (error) {
+    console.error("Error signing in: ", error.message);
+    alert("Error signing in: " + error.message); // Show alert for errors
+  }
+}
+
+// Event listener for sign-in form
+document.getElementById('sign-in-form').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form refresh
+
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  signIn(email, password); // Call sign-in function
+});
+
+// Monitor authentication state changes
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("User signed in:", user);
+    window.location.href = 'dashboard.html'; // Redirect to dashboard
+  } else {
+    console.log("No user signed in.");
+    window.location.href = 'index.html'; // Redirect to sign-in page
+  }
+});
+
+// Sign out the user
+document.getElementById('sign-out-btn').addEventListener('click', async () => {
+  try {
+    await signOut(auth);
+    console.log("User signed out.");
+    window.location.href = 'index.html'; // Redirect to sign-in page
+  } catch (error) {
+    console.error("Error signing out: ", error.message);
+    alert("Error signing out: " + error.message); // Show alert for errors
   }
 });
