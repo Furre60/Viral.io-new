@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viral.io Dashboard</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    nav {
+      background-color: #007bff;
+      color: white;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 18px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .card {
+      background-color: white;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    .quick-links a {
+      display: block;
+      color: #007bff;
+      text-decoration: none;
+      margin: 10px 0;
+    }
+
+    .quick-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <span>Viral.io Dashboard</span>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="profile.html">Profile</a>
+      <a id="sign-out-btn" href="#">Sign Out</a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h1>Welcome</h1>
+      <p id="user-email">Loading...</p>
+    </div>
+
+    <div class="card">
+      <h2>Your Activity</h2>
+      <p id="last-login">Last Login: Loading...</p>
+      <p id="account-created">Account Created: Loading...</p>
+    </div>
+
+    <div class="card quick-links">
+      <h2>Quick Links</h2>
+      <a href="manage-profile.html">Manage Profile</a>
+    </div>
+  </div>
+
+  <script type="module" src="dashboard.js"></script>
+</body>
+</html>
