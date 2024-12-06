@@ -1,13 +1,29 @@
+// Import Firebase SDKs (use your Firebase version if needed)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
 
-// Initialize Firebase Authentication
-const auth = getAuth();
+// Firebase configuration object (use the one from your Firebase Console)
+const firebaseConfig = {
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
+  authDomain: "viral-2de41.firebaseapp.com",
+  projectId: "viral-2de41",
+  storageBucket: "viral-2de41.firebasestorage.app",
+  messagingSenderId: "1074723679254",
+  appId: "1:1074723679254:web:03445debbac201072d9937",
+  measurementId: "G-9TYGZN1SSV"
+};
 
-// Get DOM elements
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+
+// Get the Firebase Auth and Storage services
+const auth = getAuth(app);
+
+// DOM Elements
 const displayNameInput = document.getElementById('display-name');
-const passwordInput = document.getElementById('password');
-const currentPasswordInput = document.getElementById('current-password'); // Input for current password (needed for reauthentication)
+const currentPasswordInput = document.getElementById('current-password');
+const newPasswordInput = document.getElementById('new-password');
 const profilePicInput = document.getElementById('profile-pic');
 const updateProfileBtn = document.getElementById('update-profile-btn');
 
@@ -15,44 +31,34 @@ const updateProfileBtn = document.getElementById('update-profile-btn');
 updateProfileBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
 
-  if (!user) {
-    alert("No user is signed in.");
-    return;
-  }
-
-  // Get updated display name and password
   const newDisplayName = displayNameInput.value.trim();
-  const newPassword = passwordInput.value.trim();
-  const currentPassword = currentPasswordInput.value.trim();  // Get current password
+  const currentPassword = currentPasswordInput.value.trim();
+  const newPassword = newPasswordInput.value.trim();
 
   try {
-    // Update display name if provided
+    if (!user) {
+      alert("No user is signed in.");
+      return;
+    }
+
+    // Update display name
     if (newDisplayName) {
       await updateProfile(user, { displayName: newDisplayName });
       alert('Display name updated successfully!');
     }
 
-    // Update password if provided
-    if (newPassword) {
-      // Ensure the current password is provided before updating the password
-      if (!currentPassword) {
-        alert("Please provide your current password to update your password.");
-        return;
-      }
-
-      // Reauthenticate user with the current password
+    // Update password
+    if (currentPassword && newPassword) {
       const userCredential = EmailAuthProvider.credential(user.email, currentPassword);
-      await reauthenticateWithCredential(user, userCredential); // Reauthenticate
-
-      // Update password
+      await reauthenticateWithCredential(user, userCredential);
       await updatePassword(user, newPassword);
       alert('Password updated successfully!');
     }
 
-    // Handle profile picture upload (if selected)
+    // Handle profile picture upload
     if (profilePicInput.files.length > 0) {
       const file = profilePicInput.files[0];
-      const storage = getStorage();
+      const storage = getStorage(app);
       const profilePicRef = ref(storage, `profile_pics/${user.uid}`);
       await uploadBytes(profilePicRef, file);
       alert('Profile picture updated successfully!');
@@ -60,6 +66,6 @@ updateProfileBtn.addEventListener('click', async () => {
 
   } catch (error) {
     console.error("Error updating profile: ", error.message);
-    alert("Error updating profile: " + error.message); // Show alert for errors
+    alert("Error updating profile: " + error.message);
   }
 });
