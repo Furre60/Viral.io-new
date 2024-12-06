@@ -1,4 +1,3 @@
-// Ensure the script is a module
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
@@ -44,10 +43,11 @@ document.getElementById('sign-in-form').addEventListener('submit', function(even
 
 // Monitor authentication state changes
 onAuthStateChanged(auth, (user) => {
-  if (user) {
+  // Only redirect if there's no user already signed in, otherwise, prevent loop
+  if (user && window.location.pathname !== '/dashboard.html') {
     console.log("User signed in:", user);
     window.location.href = 'dashboard.html'; // Redirect to dashboard
-  } else {
+  } else if (!user && window.location.pathname !== '/index.html') {
     console.log("No user signed in.");
     window.location.href = 'index.html'; // Redirect to sign-in page
   }
