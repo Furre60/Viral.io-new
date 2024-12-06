@@ -1,90 +1,67 @@
-/* General reset for the page */
+/* General Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-/* Body styling */
 body {
-  font-family: Arial, sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #f4f4f4;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-/* Hero section styling */
+/* Header Styles */
+header {
+    background-color: #2C3E50;
+    padding: 20px;
+    text-align: center;
+}
+
+header img {
+    max-width: 150px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Hero Section */
 #hero {
-  position: relative;
-  height: 100vh; /* Full viewport height */
-  overflow: hidden;
-}
-
-#hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Ensures the image covers the section without distortion */
-  filter: brightness(50%); /* Darkens the image to enhance text readability */
-}
-
-.hero-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: white;
+    background-image: url('slideshow1.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
 }
 
 .hero-content h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+    font-size: 3em;
+    margin-bottom: 20px;
 }
 
 .hero-content p {
-  font-size: 1.5rem;
-  margin-bottom: 30px;
+    font-size: 1.5em;
+    margin-bottom: 20px;
 }
 
-.cta-button {
-  padding: 10px 20px;
-  background-color: #ff4d4d;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-size: 1.2rem;
-}
-
-.cta-button:hover {
-  background-color: #ff1a1a;
-}
-
-/* Features Section Styling */
-#features {
-  display: flex;
-  justify-content: space-around;
-  padding: 50px 10%;
-  background-color: #fff;
-}
-
-.feature-item {
-  text-align: center;
-  max-width: 30%;
-}
-
-.feature-item h2 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.feature-item p {
-  font-size: 1.2rem;
-}
-
-/* Footer styling */
+/* Footer Section */
 footer {
-  text-align: center;
-  padding: 20px;
-  background-color: #333;
-  color: white;
+    background-color: #2C3E50;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
 }
