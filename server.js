@@ -1,54 +1,51 @@
-// server.js
+// Import required modules
 const express = require('express');
 const multer = require('multer');
-const cors = require('cors');
-const cloudinary = require('./cloudinaryConfig'); // Import the Cloudinary config
-const uploadProfilePicture = require('./uploadProfilePicture'); // Import the file upload function
+const cloudinary = require('cloudinary').v2;
+const dotenv = require('dotenv');
 
-const app = express();
-const port = 3000;
+// Load environment variables from .env file
+dotenv.config();
 
-// Enable CORS
-app.use(cors());
-
-// Multer configuration for file uploads
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-app.use(express.static('public')); // Serve static files
-
-// Upload route
-app.post('/upload-profile-picture', upload.single('file'), async (req, res) => {
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded.' });
-    }
-
-    const fileBuffer = req.file.buffer;
-    const fileName = req.file.originalname;
-
-    // Upload the image to Cloudinary
-    const cloudinaryResponse = await cloudinary.uploader.upload_stream(
-      { public_id: fileName, resource_type: 'image' },
-      (error, result) => {
-        if (error) {
-          console.error('Error uploading to Cloudinary:', error);
-          return res.status(500).json({ error: 'Error uploading to Cloudinary' });
-        }
-
-        // Send the image URL back to the client
-        res.json({ url: result.secure_url });
-      }
-    );
-
-    // Pipe the file buffer to Cloudinary's upload stream
-    fileBuffer.pipe(cloudinaryResponse);
-  } catch (error) {
-    console.error('Error handling the upload:', error);
-    res.status(500).json({ error: 'Internal server error.' });
-  }
+// Initialize Cloudinary with your credentials
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_URL.split('@')[1].split(':')[0],
+  api_key: process.env.CLOUDINARY_URL.split(':')[1].split('@')[0],
+  api_secret: process.env.CLOUDINARY_URL.split(':')[2].split('@')[0],
 });
 
+// Set up Express server
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Multer setup for handling file uploads
+const storage = multer.memoryStorage(); // Files will be stored in memory
+const upload = multer({ storage: storage });
+
+// Endpoint to upload profile picture to Cloudinary
+app.post('/upload-profile-picture', upload.single('profile_picture'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).send('No file uploaded');
+  }
+
+  // Upload to Cloudinary
+  cloudinary.uploader.upload_stream(
+    { resource_type: 'auto', public_id: `profile_pics/${req.file.originalname}` },
+    (error, result) => {
+      if (error) {
+        return res.status(500).send(error);
+      }
+      res.status(200).json({ message: 'File uploaded successfully', data: result });
+    }
+  ).end(req.file.buffer); // Send the file buffer to Cloudinary
+});
+
+// Basic route to test the server
+app.get('/', (req, res) => {
+  res.send('Welcome to the Cloudinary Upload API');
+});
+
+// Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 });
