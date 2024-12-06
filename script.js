@@ -3,9 +3,9 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebas
 import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"; // Authentication functions
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js"; // Analytics
 
-// Your Firebase configuration (replace with your actual Firebase credentials)
+// Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE", // Replace with the correct API key from the Firebase Console
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",  // Use the correct API key here
   authDomain: "viral-2de41.firebaseapp.com",
   projectId: "viral-2de41",
   storageBucket: "viral-2de41.firebasestorage.app",
@@ -17,7 +17,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const auth = getAuth(app); // Initialize authentication service
+const auth = getAuth(app);  // Correctly use getAuth from firebase-auth.js
 
 // Function to handle sign-in
 async function signIn(email, password) {
@@ -34,7 +34,7 @@ async function signIn(email, password) {
     console.log("User signed in: ", userCredential.user);
 
     // Redirect to the dashboard after sign-in (optional)
-    window.location.href = 'dashboard.html'; // Redirect to your dashboard page
+    window.location.href = 'dashboard.html';
 
   } catch (error) {
     console.error("Error signing in: ", error.message);
@@ -50,8 +50,11 @@ document.getElementById('sign-in-form').addEventListener('submit', function(even
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
 
-  // Call the signIn function
-  signIn(email, password);
+  // Call the signIn function and handle any errors
+  signIn(email, password).catch((error) => {
+    console.error("Error signing in:", error.message);
+    alert("Error signing in: " + error.message);
+  });
 });
 
 // Function to handle password reset
