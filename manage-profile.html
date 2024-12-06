@@ -4,10 +4,35 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Profile</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Manage Profile</h1>
-  <p>Placeholder for managing profile settings.</p>
-  <a href="dashboard.html">Go Back to Dashboard</a>
+  <div class="container">
+    <h1>Manage Your Profile</h1>
+    
+    <div class="form-group">
+      <label for="display-name">Display Name</label>
+      <input type="text" id="display-name" placeholder="Enter your display name">
+    </div>
+    
+    <div class="form-group">
+      <label for="current-password">Current Password</label>
+      <input type="password" id="current-password" placeholder="Enter your current password">
+    </div>
+
+    <div class="form-group">
+      <label for="new-password">New Password</label>
+      <input type="password" id="new-password" placeholder="Enter a new password">
+    </div>
+
+    <div class="form-group">
+      <label for="profile-pic">Profile Picture</label>
+      <input type="file" id="profile-pic">
+    </div>
+    
+    <button id="update-profile-btn">Update Profile</button>
+  </div>
+
+  <script type="module" src="js/manage-profile.js"></script>
 </body>
 </html>
