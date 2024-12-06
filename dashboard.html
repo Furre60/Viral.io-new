@@ -1,28 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - Viral.io</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <header>
-        <h1>Dashboard</h1>
+        <img src="images/Logo.webp" alt="Viral.io Logo" id="logo">
         <nav>
-            <a href="manage-profile.html">Manage Profile</a>
-            <button id="sign-out-button" class="button">Sign Out</button>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="manage-profile.html">Manage Profile</a></li>
+                <li><a href="index.html">Logout</a></li>
+            </ul>
         </nav>
     </header>
-    <div class="container">
-        <h2>Welcome, User!</h2>
-        <p>This is your dashboard.</p>
-    </div>
-    <script src="auth.js"></script>
-    <script>
-        document.getElementById('sign-out-button').addEventListener('click', () => {
-            signOutUser(); // Defined in auth.js
-        });
-    </script>
+
+    <main>
+        <section class="dashboard">
+            <h1>Welcome to Your Dashboard</h1>
+            <p>Manage your profile and track your content's performance.</p>
+            <!-- Your dashboard content here -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Viral.io. All rights reserved.</p>
+    </footer>
+
+    <!-- Include auth.js as a module -->
+    <script type="module" src="auth.js"></script>
 </body>
+
 </html>
