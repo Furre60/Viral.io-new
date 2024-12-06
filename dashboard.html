@@ -12,23 +12,23 @@
       background-color: #f4f4f9;
     }
 
-    header {
+    nav {
       background-color: #007bff;
       color: white;
-      padding: 15px 20px;
+      padding: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    header nav a {
+    nav a {
       color: white;
       text-decoration: none;
-      margin: 0 15px;
-      font-weight: bold;
+      margin: 0 10px;
+      font-size: 18px;
     }
 
-    header nav a:hover {
+    nav a:hover {
       text-decoration: underline;
     }
 
@@ -36,40 +36,23 @@
       padding: 20px;
     }
 
-    .greeting {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .activity-section, .quick-links {
-      margin-top: 20px;
-    }
-
     .card {
       background-color: white;
-      padding: 15px;
-      margin-bottom: 20px;
+      padding: 20px;
+      margin: 20px 0;
       border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    .card h2 {
-      font-size: 18px;
+    h1 {
       margin-bottom: 10px;
-    }
-
-    .card p {
-      margin: 5px 0;
-      color: #555;
     }
 
     .quick-links a {
       display: block;
       color: #007bff;
       text-decoration: none;
-      margin: 5px 0;
-      font-weight: bold;
+      margin: 10px 0;
     }
 
     .quick-links a:hover {
@@ -78,19 +61,22 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>Viral.io Dashboard</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Profile</a>
+  <nav>
+    <span>Viral.io Dashboard</span>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="profile.html">Profile</a>
       <a id="sign-out-btn" href="#">Sign Out</a>
-    </nav>
-  </header>
+    </div>
+  </nav>
 
   <div class="container">
-    <div class="greeting" id="greeting">Loading...</div>
+    <div class="card">
+      <h1>Welcome</h1>
+      <p id="user-email">Loading...</p>
+    </div>
 
-    <div class="card activity-section">
+    <div class="card">
       <h2>Your Activity</h2>
       <p id="last-login">Last Login: Loading...</p>
       <p id="account-created">Account Created: Loading...</p>
@@ -98,7 +84,7 @@
 
     <div class="card quick-links">
       <h2>Quick Links</h2>
-      <a href="#">Manage Profile</a>
+      <a href="manage-profile.html">Manage Profile</a>
     </div>
   </div>
 
