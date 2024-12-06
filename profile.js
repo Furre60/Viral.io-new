@@ -1,22 +1,9 @@
-// Import Firebase modules
+// profile.js
 import { getAuth, updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import app from './firebase.js';  // Import firebase initialization
 
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-  measurementId: "YOUR_MEASUREMENT_ID"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app); // Now Firebase is initialized
+const auth = getAuth(app);
 
 // Get DOM elements
 const displayNameInput = document.getElementById('display-name');
@@ -34,19 +21,16 @@ updateProfileBtn.addEventListener('click', async () => {
     return;
   }
 
-  // Get updated display name
   const newDisplayName = displayNameInput.value.trim();
   const newPassword = passwordInput.value.trim();
-  const currentPassword = currentPasswordInput.value.trim(); // Get the current password
+  const currentPassword = currentPasswordInput.value.trim();  // Get current password
 
   try {
-    // Update display name if provided
     if (newDisplayName) {
       await updateProfile(user, { displayName: newDisplayName });
       alert('Display name updated successfully!');
     }
 
-    // Update password if new password is provided
     if (newPassword) {
       if (!currentPassword) {
         alert("Please enter your current password to change the password.");
