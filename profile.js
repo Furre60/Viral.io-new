@@ -1,12 +1,13 @@
 import { getAuth, updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
 
-// Initialize Firebase (Firebase config should be placed here)
+// Initialize Firebase Authentication
 const auth = getAuth();
 
 // Get DOM elements
 const displayNameInput = document.getElementById('display-name');
 const passwordInput = document.getElementById('password');
+const currentPasswordInput = document.getElementById('current-password'); // Input for current password (needed for reauthentication)
 const profilePicInput = document.getElementById('profile-pic');
 const updateProfileBtn = document.getElementById('update-profile-btn');
 
@@ -14,19 +15,36 @@ const updateProfileBtn = document.getElementById('update-profile-btn');
 updateProfileBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
 
-  // Get updated display name
+  if (!user) {
+    alert("No user is signed in.");
+    return;
+  }
+
+  // Get updated display name and password
   const newDisplayName = displayNameInput.value.trim();
   const newPassword = passwordInput.value.trim();
+  const currentPassword = currentPasswordInput.value.trim();  // Get current password
 
   try {
+    // Update display name if provided
     if (newDisplayName) {
       await updateProfile(user, { displayName: newDisplayName });
       alert('Display name updated successfully!');
     }
 
+    // Update password if provided
     if (newPassword) {
-      const userCredential = EmailAuthProvider.credential(user.email, "user_current_password"); // Ensure current password is provided
-      await reauthenticateWithCredential(user, userCredential);  // Reauthenticate to change password
+      // Ensure the current password is provided before updating the password
+      if (!currentPassword) {
+        alert("Please provide your current password to update your password.");
+        return;
+      }
+
+      // Reauthenticate user with the current password
+      const userCredential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, userCredential); // Reauthenticate
+
+      // Update password
       await updatePassword(user, newPassword);
       alert('Password updated successfully!');
     }
