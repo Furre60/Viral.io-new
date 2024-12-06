@@ -1,7 +1,29 @@
+// Import necessary Firebase modules
+import { getAuth, updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
+// Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
+  authDomain: "viral-2de41.firebaseapp.com",
+  projectId: "viral-2de41",
+  storageBucket: "viral-2de41.firebasestorage.app",
+  messagingSenderId: "1074723679254",
+  appId: "1:1074723679254:web:03445debbac201072d9937",
+  measurementId: "G-9TYGZN1SSV"
+};
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
+
+// Get authentication instance
+const auth = getAuth();
+
 // Get DOM elements
 const displayNameInput = document.getElementById('display-name');
 const passwordInput = document.getElementById('password');
-const currentPasswordInput = document.getElementById('current-password'); // Ensure this is the current password field
+const currentPasswordInput = document.getElementById('current-password'); // Current password field
 const profilePicInput = document.getElementById('profile-pic');
 const updateProfileBtn = document.getElementById('update-profile-btn');
 
@@ -36,6 +58,7 @@ updateProfileBtn.addEventListener('click', async () => {
     // Handle profile picture upload (if selected)
     if (profilePicInput.files.length > 0) {
       const file = profilePicInput.files[0];
+      const storage = getStorage();
       const profilePicRef = ref(storage, `profile_pics/${user.uid}`);
       await uploadBytes(profilePicRef, file);
       alert('Profile picture updated successfully!');
