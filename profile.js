@@ -24,6 +24,7 @@ const storage = getStorage(app);
 // Get DOM elements
 const displayNameInput = document.getElementById('display-name');
 const passwordInput = document.getElementById('password');
+const currentPasswordInput = document.getElementById('current-password'); // Current password field
 const profilePicInput = document.getElementById('profile-pic');
 const updateProfileBtn = document.getElementById('update-profile-btn');
 
@@ -31,9 +32,10 @@ const updateProfileBtn = document.getElementById('update-profile-btn');
 updateProfileBtn.addEventListener('click', async () => {
   const user = auth.currentUser;
 
-  // Get updated display name and password
+  // Get updated display name, password, and current password
   const newDisplayName = displayNameInput.value.trim();
   const newPassword = passwordInput.value.trim();
+  const currentPassword = currentPasswordInput.value.trim(); // Get current password
 
   try {
     if (newDisplayName) {
@@ -42,7 +44,13 @@ updateProfileBtn.addEventListener('click', async () => {
     }
 
     if (newPassword) {
-      const userCredential = EmailAuthProvider.credential(user.email, "user_current_password"); // Use the actual current password here
+      // Check if current password is provided
+      if (!currentPassword) {
+        alert("Please enter your current password to update the password.");
+        return;
+      }
+
+      const userCredential = EmailAuthProvider.credential(user.email, currentPassword); // Use current password
       await reauthenticateWithCredential(user, userCredential);  // Reauthenticate to change password
       await updatePassword(user, newPassword);
       alert('Password updated successfully!');
