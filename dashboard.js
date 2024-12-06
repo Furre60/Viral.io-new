@@ -1,10 +1,8 @@
-// Import necessary Firebase functions
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"; // App initialization
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"; // Authentication functions
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-// Your Firebase configuration
+// Firebase config and initialization
 const firebaseConfig = {
-  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c", // Use your actual API key here
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
   authDomain: "viral-2de41.firebaseapp.com",
   projectId: "viral-2de41",
   storageBucket: "viral-2de41.firebasestorage.app",
@@ -13,24 +11,15 @@ const firebaseConfig = {
   measurementId: "G-9TYGZN1SSV"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig); // Make sure this is called first
-const auth = getAuth(app);  // Now we can safely getAuth() after initializing the app
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-// Monitor authentication state changes
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    console.log("User signed in:", user);
-    document.getElementById('user-email').innerText = `Welcome, ${user.email}`;
-    document.getElementById('sign-out-btn').style.display = 'block';
-  } else {
-    console.log("No user signed in.");
-    document.getElementById('user-email').innerText = "Please sign in.";
-    document.getElementById('sign-out-btn').style.display = 'none';
-  }
+// Event listener for "Manage Profile" button
+document.getElementById('manage-profile-btn').addEventListener('click', function() {
+  window.location.href = 'profile.html'; // Ensure this path is correct
 });
 
-// Sign out the user when the "Sign Out" button is clicked
+// Event listener for "Sign Out" button
 document.getElementById('sign-out-btn').addEventListener('click', async () => {
   try {
     await signOut(auth);
@@ -38,6 +27,19 @@ document.getElementById('sign-out-btn').addEventListener('click', async () => {
     window.location.href = 'index.html'; // Redirect to sign-in page
   } catch (error) {
     console.error("Error signing out: ", error.message);
-    alert("Error signing out: " + error.message);  // Show alert for errors
+    alert("Error signing out: " + error.message); // Show alert for errors
+  }
+});
+
+// Monitor authentication state
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById('user-email').innerText = `Welcome, ${user.email}`;
+    // Display last login and account created times (you can replace with actual data)
+    document.getElementById('last-login').innerText = `Last Login: ${new Date().toLocaleString()}`;
+    document.getElementById('account-created').innerText = `Account Created: ${user.metadata.creationTime}`;
+  } else {
+    console.log("No user signed in.");
+    document.getElementById('user-email').innerText = "Please sign in.";
   }
 });
