@@ -1,6 +1,3 @@
-// firebase-config.js
-
-// Your Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
   authDomain: "viral-2de41.firebaseapp.com",
@@ -10,6 +7,3 @@ const firebaseConfig = {
   appId: "1:1074723679254:web:03445debbac201072d9937",
   measurementId: "G-9TYGZN1SSV"
 };
-
-// Export the Firebase config
-export default firebaseConfig;
