@@ -1,7 +1,8 @@
 [
   {
     "origin": ["https://viral-io.netlify.app"],
-    "method": ["GET", "POST", "PUT"],
+    "responseHeader": ["Content-Type"],
+    "method": ["GET", "POST", "OPTIONS"],
     "maxAgeSeconds": 3600
   }
 ]
