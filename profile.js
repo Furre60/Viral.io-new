@@ -1,55 +1,51 @@
-// Ensure the DOM is fully loaded before accessing any elements
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Firebase SDKs
-  const auth = firebase.auth();
-  const storage = firebase.storage();
+// Import the necessary Firebase functions
+import { getAuth, updateProfile, updatePassword, reauthenticateWithCredential, EmailAuthProvider } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
 
-  // DOM Elements
-  const displayNameInput = document.getElementById('display-name');
-  const currentPasswordInput = document.getElementById('current-password');
-  const newPasswordInput = document.getElementById('new-password');
-  const profilePicInput = document.getElementById('profile-pic');
-  const updateProfileBtn = document.getElementById('update-profile-btn');
+// Initialize Firebase (Firebase config should be placed here)
+const auth = getAuth(); // Get the authentication instance
 
-  // Handle profile update when button is clicked
-  updateProfileBtn.addEventListener('click', async () => {
-    const user = auth.currentUser;
+// Get DOM elements
+const displayNameInput = document.getElementById('display-name');
+const currentPasswordInput = document.getElementById('current-password');
+const newPasswordInput = document.getElementById('new-password');
+const profilePicInput = document.getElementById('profile-pic');
+const updateProfileBtn = document.getElementById('update-profile-btn');
 
-    const newDisplayName = displayNameInput.value.trim();
-    const currentPassword = currentPasswordInput.value.trim();
-    const newPassword = newPasswordInput.value.trim();
+// Handle profile update when button is clicked
+updateProfileBtn.addEventListener('click', async () => {
+  const user = auth.currentUser;
 
-    try {
-      if (!user) {
-        alert("No user is signed in.");
-        return;
-      }
+  // Get updated display name and password
+  const newDisplayName = displayNameInput.value.trim();
+  const newPassword = newPasswordInput.value.trim();
+  const currentPassword = currentPasswordInput.value.trim();
 
-      // Update display name
-      if (newDisplayName) {
-        await user.updateProfile({ displayName: newDisplayName });
-        alert('Display name updated successfully!');
-      }
-
-      // Update password
-      if (currentPassword && newPassword) {
-        const userCredential = firebase.auth.EmailAuthProvider.credential(user.email, currentPassword);
-        await firebase.auth().reauthenticateWithCredential(userCredential);
-        await user.updatePassword(newPassword);
-        alert('Password updated successfully!');
-      }
-
-      // Handle profile picture upload
-      if (profilePicInput.files.length > 0) {
-        const file = profilePicInput.files[0];
-        const profilePicRef = storage.ref(`profile_pics/${user.uid}`);
-        await profilePicRef.put(file);
-        alert('Profile picture updated successfully!');
-      }
-
-    } catch (error) {
-      console.error("Error updating profile: ", error.message);
-      alert("Error updating profile: " + error.message);
+  try {
+    if (newDisplayName) {
+      await updateProfile(user, { displayName: newDisplayName });
+      alert('Display name updated successfully!');
     }
-  });
+
+    if (newPassword) {
+      // Reauthenticate with the current password to allow password change
+      const userCredential = EmailAuthProvider.credential(user.email, currentPassword);
+      await reauthenticateWithCredential(user, userCredential);  // Reauthenticate to change password
+      await updatePassword(user, newPassword);
+      alert('Password updated successfully!');
+    }
+
+    // Handle profile picture upload (if selected)
+    if (profilePicInput.files.length > 0) {
+      const file = profilePicInput.files[0];
+      const storage = getStorage();
+      const profilePicRef = ref(storage, `profile_pics/${user.uid}`);
+      await uploadBytes(profilePicRef, file);
+      alert('Profile picture updated successfully!');
+    }
+
+  } catch (error) {
+    console.error("Error updating profile: ", error.message);
+    alert("Error updating profile: " + error.message); // Show alert for errors
+  }
 });
