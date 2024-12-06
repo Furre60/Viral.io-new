@@ -1,88 +1,77 @@
-/* Global styles */
+/* Basic Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
 }
 
 body {
+    font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
-    padding-top: 60px;
 }
 
-/* Header styles */
 header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     background-color: #333;
-    color: white;
-    padding: 10px 20px;
+    padding: 20px;
+    color: #fff;
+    text-align: center;
 }
 
-#logo {
-    width: 150px;
-    height: auto;
+header img {
+    max-width: 200px;
+    margin-bottom: 20px;
 }
 
 nav ul {
-    list-style: none;
-    display: flex;
-    gap: 15px;
+    list-style-type: none;
 }
 
-nav a {
-    color: white;
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
     text-decoration: none;
-    font-weight: bold;
 }
 
-/* Main content styles */
+nav ul li a:hover {
+    text-decoration: underline;
+}
+
 main {
     padding: 20px;
 }
 
 .hero {
-    background-color: #ff6f61;
-    color: white;
+    background-color: #333;
+    color: #fff;
+    padding: 50px 0;
     text-align: center;
-    padding: 50px 20px;
 }
 
 .hero h1 {
-    font-size: 3em;
+    font-size: 2.5rem;
 }
 
-.about {
-    text-align: center;
-    margin-top: 30px;
-}
-
+.about,
 .trending {
-    margin-top: 30px;
-    text-align: center;
-}
-
-.trending-images {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+    margin-top: 40px;
 }
 
 .trending-images img {
-    width: 200px;
-    height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    margin-right: 10px;
 }
 
-/* Footer styles */
 footer {
-    text-align: center;
-    padding: 20px;
     background-color: #333;
-    color: white;
-    margin-top: 40px;
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
