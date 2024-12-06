@@ -15,6 +15,7 @@
       align-items: center;
       height: 100vh;
     }
+
     .dashboard-container {
       background-color: white;
       padding: 30px;
@@ -23,16 +24,19 @@
       width: 350px;
       text-align: center;
     }
+
     h1 {
       color: #333;
       font-size: 28px;
       margin-bottom: 20px;
     }
+
     p {
       font-size: 16px;
       color: #555;
       margin-bottom: 30px;
     }
+
     button {
       width: 100%;
       padding: 12px;
@@ -42,19 +46,28 @@
       border-radius: 5px;
       font-size: 16px;
       cursor: pointer;
+      margin-bottom: 10px; /* Add margin to space out buttons */
     }
+
     button:hover {
       background-color: #0056b3;
     }
   </style>
 </head>
 <body>
+
   <div class="dashboard-container">
     <h1>Welcome to Your Dashboard</h1>
     <p id="user-email">Loading...</p>
+    <p>Your Activity</p>
+    <p id="last-login">Last Login: Loading...</p>
+    <p id="account-created">Account Created: Loading...</p>
+
+    <!-- Buttons for Sign Out and Manage Profile -->
     <button id="sign-out-btn">Sign Out</button>
     <button id="manage-profile-btn">Manage Profile</button>
   </div>
+
   <script type="module" src="dashboard.js"></script>
 </body>
 </html>
