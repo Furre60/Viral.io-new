@@ -4,43 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manage Profile</title>
-
-  <!-- Add Firebase SDKs before your script file -->
-  <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"></script>
-  <script type="module" src="https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js"></script>
 </head>
 <body>
   <h1>Manage Profile</h1>
-
-  <!-- Display Name -->
-  <div class="form-group">
-    <label for="display-name">Display Name</label>
-    <input type="text" id="display-name" placeholder="Enter new display name">
-  </div>
-
-  <!-- New Password -->
-  <div class="form-group">
-    <label for="password">New Password</label>
-    <input type="password" id="password" placeholder="Enter new password">
-  </div>
-
-  <!-- Current Password (Required for password change) -->
-  <div class="form-group">
-    <label for="current-password">Current Password</label>
-    <input type="password" id="current-password" placeholder="Enter your current password" required>
-  </div>
-
-  <!-- Profile Picture -->
-  <div class="form-group">
-    <label for="profile-pic">Profile Picture (Optional)</label>
-    <input type="file" id="profile-pic">
-  </div>
-
-  <!-- Update Profile Button -->
-  <button id="update-profile-btn">Update Profile</button>
-
-  <!-- Your Script -->
+  <form id="profile-form">
+    <div>
+      <label for="display-name">Display Name:</label>
+      <input type="text" id="display-name" placeholder="Enter your new display name" required>
+    </div>
+    <div>
+      <label for="current-password">Current Password:</label>
+      <input type="password" id="current-password" placeholder="Enter your current password" required>
+    </div>
+    <div>
+      <label for="new-password">New Password:</label>
+      <input type="password" id="new-password" placeholder="Enter your new password">
+    </div>
+    <div>
+      <label for="profile-pic">Profile Picture:</label>
+      <input type="file" id="profile-pic">
+    </div>
+    <button type="button" id="update-profile-btn">Update Profile</button>
+  </form>
   <script type="module" src="profile.js"></script>
 </body>
 </html>
