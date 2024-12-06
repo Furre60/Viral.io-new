@@ -1,13 +1,11 @@
-const cloudinary = require('./cloudinaryConfig');
+// cloudinaryConfig.js
+const cloudinary = require('cloudinary').v2;
 
-function uploadProfilePicture(file) {
-  return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(file, { folder: 'profile_pics' }, function(error, result) {
-      if (error) {
-        reject(error);
-      } else {
-        resolve(result.url);  // This is the URL of the uploaded image
-      }
-    });
-  });
-}
+// Configure Cloudinary with your credentials
+cloudinary.config({
+  cloud_name: 'dosbc3syf',
+  api_key: '151686182797663',
+  api_secret: 'YOUR_API_SECRET', // Replace with your actual API secret
+});
+
+module.exports = cloudinary;
