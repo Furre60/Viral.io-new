@@ -35,7 +35,7 @@ updateProfileBtn.addEventListener('click', async () => {
   // Get updated display name, password, and current password
   const newDisplayName = displayNameInput.value.trim();
   const newPassword = passwordInput.value.trim();
-  const currentPassword = currentPasswordInput.value.trim(); // Get current password
+  const currentPassword = currentPasswordInput ? currentPasswordInput.value.trim() : ''; // Safely get current password
 
   try {
     if (newDisplayName) {
