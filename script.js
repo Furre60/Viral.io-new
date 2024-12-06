@@ -1,3 +1,22 @@
+// Ensure the script is a module
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+// Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
+  authDomain: "viral-2de41.firebaseapp.com",
+  projectId: "viral-2de41",
+  storageBucket: "viral-2de41.firebasestorage.app",
+  messagingSenderId: "1074723679254",
+  appId: "1:1074723679254:web:03445debbac201072d9937",
+  measurementId: "G-9TYGZN1SSV"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
 document.addEventListener('DOMContentLoaded', function() {
   // Ensure all DOM elements are loaded before manipulating them
   
@@ -7,25 +26,6 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Check if the elements exist before adding event listeners
   if (userEmailElement && signOutBtn) {
-    // Firebase Authentication setup
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-    
-    // Your Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c", 
-      authDomain: "viral-2de41.firebaseapp.com",
-      projectId: "viral-2de41",
-      storageBucket: "viral-2de41.firebasestorage.app",
-      messagingSenderId: "1074723679254",
-      appId: "1:1074723679254:web:03445debbac201072d9937",
-      measurementId: "G-9TYGZN1SSV"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
     // Monitor authentication state changes
     onAuthStateChanged(auth, (user) => {
       if (user) {
