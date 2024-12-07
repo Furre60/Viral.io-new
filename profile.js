@@ -1,51 +1,61 @@
-// profile.js
-import { auth, storage } from "./firebase.js";
-import {
-  updateProfile,
-  updatePassword,
-  reauthenticateWithCredential,
-  EmailAuthProvider,
-} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import { ref, uploadBytes } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-storage.js";
+<<<<<<< HEAD
+import { getAuth, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
 
-// DOM Elements
-const displayNameInput = document.getElementById("display-name");
-const currentPasswordInput = document.getElementById("current-password");
-const newPasswordInput = document.getElementById("new-password");
-const profilePicInput = document.getElementById("profile-pic");
-const updateProfileBtn = document.getElementById("update-profile-btn");
+const auth = getAuth();
 
-// Update profile logic
-updateProfileBtn.addEventListener("click", async () => {
-  const user = auth.currentUser;
-  const newDisplayName = displayNameInput.value.trim();
-  const currentPassword = currentPasswordInput.value.trim();
-  const newPassword = newPasswordInput.value.trim();
+document.getElementById('update-profile-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const displayName = document.getElementById('display-name').value;
+  const newPassword = document.getElementById('new-password').value;
+  const confirmPassword = document.getElementById('confirm-password').value;
+
+  if (newPassword && newPassword !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
 
   try {
-    // Update display name
-    if (newDisplayName) {
-      await updateProfile(user, { displayName: newDisplayName });
-      alert("Display name updated successfully!");
+    const user = auth.currentUser;
+    if (displayName) {
+      await updateProfile(user, { displayName });
     }
-
-    // Update password
-    if (currentPassword && newPassword) {
-      const credential = EmailAuthProvider.credential(user.email, currentPassword);
-      await reauthenticateWithCredential(user, credential); // Reauthenticate user
-      await updatePassword(user, newPassword);
-      alert("Password updated successfully!");
+    if (newPassword) {
+      await user.updatePassword(newPassword);
     }
-
-    // Update profile picture
-    if (profilePicInput.files.length > 0) {
-      const file = profilePicInput.files[0];
-      const profilePicRef = ref(storage, `profile_pics/${user.uid}`);
-      await uploadBytes(profilePicRef, file);
-      alert("Profile picture updated successfully!");
-    }
+    alert("Profile updated successfully.");
   } catch (error) {
-    console.error("Error updating profile:", error.message);
+    console.error("Error updating profile: ", error);
     alert("Error updating profile: " + error.message);
   }
 });
+=======
+import { getAuth, updateProfile } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+const auth = getAuth();
+
+document.getElementById('update-profile-form').addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const displayName = document.getElementById('display-name').value;
+  const newPassword = document.getElementById('new-password').value;
+  const confirmPassword = document.getElementById('confirm-password').value;
+
+  if (newPassword && newPassword !== confirmPassword) {
+    alert("Passwords do not match.");
+    return;
+  }
+
+  try {
+    const user = auth.currentUser;
+    if (displayName) {
+      await updateProfile(user, { displayName });
+    }
+    if (newPassword) {
+      await user.updatePassword(newPassword);
+    }
+    alert("Profile updated successfully.");
+  } catch (error) {
+    console.error("Error updating profile: ", error);
+    alert("Error updating profile: " + error.message);
+  }
+});
+>>>>>>> bec8858 (Add files via upload)
