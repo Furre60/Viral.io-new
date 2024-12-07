@@ -1,0 +1,178 @@
+<<<<<<< HEAD
+<<<<<<< HEAD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+</head>
+<body>
+  <h1>Profile Page</h1>
+  <p>Here, you can view and edit your profile details.</p>
+  <a href="dashboard.html">Go Back to Dashboard</a>
+</body>
+</html>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Profile</title>
+  <style>
+    /* Add your styles here */
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .profile-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+    h1 {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <h1>Manage Your Profile</h1>
+    <form id="update-profile-form">
+      <input type="text" id="display-name" placeholder="Display Name" required>
+      <input type="password" id="new-password" placeholder="New Password">
+      <input type="password" id="confirm-password" placeholder="Confirm Password">
+      <button type="submit">Update Profile</button>
+    </form>
+  </div>
+  <script type="module" src="profile.js"></script>
+</body>
+</html>
+>>>>>>> 8805197 (Update profile.html)
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Profile</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .profile-container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .form-group {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-container">
+    <h1>Manage Profile</h1>
+
+    <!-- Display Name -->
+    <div class="form-group">
+      <label for="display-name">Display Name</label>
+      <input type="text" id="display-name" placeholder="Enter new display name">
+    </div>
+
+    <!-- Password -->
+    <div class="form-group">
+      <label for="password">New Password</label>
+      <input type="password" id="password" placeholder="Enter new password">
+    </div>
+
+    <!-- Profile Picture (Optional) -->
+    <div class="form-group">
+      <label for="profile-pic">Profile Picture (Optional)</label>
+      <input type="file" id="profile-pic">
+    </div>
+
+    <button id="update-profile-btn">Update Profile</button>
+  </div>
+
+  <script type="module" src="profile.js"></script>
+
+</body>
+</html>
+>>>>>>> a978386 (Update profile.html)
