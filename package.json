@@ -1,0 +1,28 @@
+{
+  "name": "viral.io-new",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "cloudinary": "^2.5.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "glob-to-regexp": "^0.4.1",
+    "globals": "^11.12.0",
+    "gopd": "^1.2.0",
+    "graceful-fs": "^4.2.11",
+    "graphemer": "^1.4.0",
+    "has-flag": "^4.0.0",
+    "has-property-descriptors": "^1.0.2",
+    "has-proto": "^1.1.0",
+    "hasown": "^2.0.2",
+    "multer": "^1.4.5-lts.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
