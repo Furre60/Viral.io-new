@@ -1,25 +1,37 @@
-// server.js
 const express = require('express');
 const path = require('path');
-const cloudinary = require('./config/cloudinaryConfig'); // Import Cloudinary config
 const app = express();
 const port = 3000;
 
-// Middleware to serve static files
+// Serve static files (styles, scripts, images, etc.) from the public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Example route for uploading an image to Cloudinary
-app.post('/upload', (req, res) => {
-  const file = req.files.file; // Assuming you're using a middleware like `express-fileupload` for file uploads
-  cloudinary.uploader.upload(file.tempFilePath, (error, result) => {
-    if (error) {
-      return res.status(500).send('Upload failed');
-    }
-    res.status(200).send(`File uploaded successfully: ${result.url}`);
-  });
+// Serve the home page
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// Start server
+// Serve login page
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'Login.html'));
+});
+
+// Serve signup page
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'SignUp.html'));
+});
+
+// Serve other views like manage profile
+app.get('/manage-profile', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'manage-profile.html'));
+});
+
+// Fallback route for 404
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', '404.html'));
+});
+
+// Start the server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

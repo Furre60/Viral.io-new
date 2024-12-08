@@ -1,34 +1,33 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const loginForm = document.getElementById('login-form');
-  const signUpForm = document.getElementById('signup-form');
+const express = require('express');
+const multer = require('multer');
+const cloudinary = require('./config/cloudinaryConfig'); // Cloudinary configuration
+const User = require('./src/models/userModel'); // User model to store profile info
+const { checkAuthenticated } = require('./src/middleware/authMiddleware'); // Authentication check
 
-  if (loginForm) {
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = loginForm.email.value;
-      const password = loginForm.password.value;
+const app = express();
+const upload = multer(); // Multer middleware for file uploads
 
-      try {
-        await firebase.auth().signInWithEmailAndPassword(email, password);
-        console.log('Login successful');
-      } catch (error) {
-        console.error('Error logging in:', error.message);
-      }
+// Route to handle profile picture upload
+app.post('/upload-profile-picture', checkAuthenticated, upload.single('profilePicture'), async (req, res) => {
+  if (!req.file) return res.status(400).send('No file uploaded');
+
+  try {
+    const result = await cloudinary.uploader.upload(req.file.buffer, {
+      folder: 'profile_pictures',
+      use_filename: true,
+      unique_filename: false,
     });
-  }
 
-  if (signUpForm) {
-    signUpForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = signUpForm.email.value;
-      const password = signUpForm.password.value;
+    const user = await User.findById(req.user.id); // Assuming req.user.id contains the logged-in user's ID
+    user.profilePicture = result.secure_url; // Save the Cloudinary URL
+    await user.save();
 
-      try {
-        await firebase.auth().createUserWithEmailAndPassword(email, password);
-        console.log('Sign-up successful');
-      } catch (error) {
-        console.error('Error signing up:', error.message);
-      }
+    res.status(200).json({
+      message: 'Profile picture uploaded successfully',
+      imageUrl: result.secure_url,
     });
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    res.status(500).send('Error uploading image');
   }
 });
