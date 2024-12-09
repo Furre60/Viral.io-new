@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Viral.io</title>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome to Your Dashboard</h1>
+        <p>Manage your viral content and track performance here!</p>
+        <button id="logout-button">Logout</button>
+    </div>
+
+    <footer>
+        <p>© 2024 Viral.io</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-auth.js"></script>
+    <script src="../../firebase.js"></script>
+    <script>
+        const auth = firebase.auth();
+
+        // Logout functionality
+        document.getElementById('logout-button').addEventListener('click', function () {
+            auth.signOut()
+                .then(() => {
+                    console.log("User signed out successfully.");
+                    window.location.href = "../../index.html";
+                })
+                .catch((error) => {
+                    console.error("Logout error:", error.message);
+                });
+        });
+
+        // Redirect if no user is signed in
+        auth.onAuthStateChanged(function (user) {
+            if (!user) {
+                console.log("No user is signed in, redirecting to login...");
+                window.location.href = "../../index.html";
+            }
+        });
+    </script>
+</body>
+</html>
