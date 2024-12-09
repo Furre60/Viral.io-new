@@ -1,11 +1,8 @@
-// Firebase and other auth related code here
-// Example: Firebase authentication for Login and SignUp
+// Import necessary Firebase functions
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 
-import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-
-
-// Firebase Configuration
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDhOQ8WBGX6CgkRwyCiRhGhiCx93wz_L_c",
   authDomain: "viral-2de41.firebaseapp.com",
@@ -20,44 +17,57 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-// Sign Up logic
-const signupForm = document.getElementById('signup-form');
-if (signupForm) {
-    signupForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+// Handle login form submission
+const loginForm = document.getElementById('loginForm');
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed up successfully
-                console.log('Signed up', userCredential.user);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-            });
-    });
-}
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
-// Login logic
-const loginForm = document.getElementById('login-form');
-if (loginForm) {
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = e.target.email.value;
-        const password = e.target.password.value;
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    console.log('Logged in as:', user.email);
+    
+    // Redirect to the dashboard after successful login
+    window.location.href = "/views/dashboard.html"; // Correct the path to match the views folder
+  } catch (error) {
+    console.error('Error logging in:', error.message);
+    alert('Login failed: ' + error.message);
+  }
+});
 
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in successfully
-                console.log('Logged in', userCredential.user);
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
-            });
-    });
-}
+// Handle registration form submission
+const registerForm = document.getElementById('registerForm');
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const registerEmail = document.getElementById('registerEmail').value;
+  const registerPassword = document.getElementById('registerPassword').value;
+
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
+    const user = userCredential.user;
+    console.log('Registered as:', user.email);
+
+    // Redirect to the dashboard after successful registration
+    window.location.href = "/views/dashboard.html"; // Correct the path to match the views folder
+  } catch (error) {
+    console.error('Error registering:', error.message);
+    alert('Registration failed: ' + error.message);
+  }
+});
+
+// Firebase Auth state change listener
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    console.log("User is signed in:", user.email);
+    // Optionally redirect to the dashboard if already logged in
+    if (window.location.pathname === "/views/index.html") {
+      window.location.href = "/views/dashboard.html"; // Correct the path to match the views folder
+    }
+  } else {
+    console.log("No user is signed in.");
+  }
+});

@@ -1,29 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viral.io</title>
-    <script type="module" src="../Public/scripts/auth.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viral.io</title>
+  <!-- Corrected the CSS path to reflect the folder structure -->
+  <link rel="stylesheet" href="../Public/styles/styles.css">
 </head>
 <body>
-    <header>
-        <h1>Welcome to Viral.io</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/login">Login</a></li>
-                <li><a href="/signup">Sign Up</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h2>Build your brand with ease</h2>
-        <p>Upload and manage your videos to go viral!</p>
-    </main>
-    <footer>
-        <p>&copy; 2024 Viral.io</p>
-    </footer>
-    <script src="/scripts/auth.js"></script>
+  <header>
+    <h1>Welcome to Viral.io</h1>
+    <p>Create and manage viral content effortlessly!</p>
+  </header>
+
+  <main>
+    <section id="auth">
+      <h2>Login</h2>
+      <form id="loginForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Login</button>
+      </form>
+
+      <h2>Register</h2>
+      <form id="registerForm">
+        <label for="registerEmail">Email:</label>
+        <input type="email" id="registerEmail" name="email" required>
+        
+        <label for="registerPassword">Password:</label>
+        <input type="password" id="registerPassword" name="password" required>
+        
+        <button type="submit">Register</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2024 Viral.io</p>
+  </footer>
+
+  <!-- Corrected the JS path to reflect the folder structure, and added type="module" -->
+  <script type="module" src="../Public/scripts/auth.js"></script>
 </body>
 </html>

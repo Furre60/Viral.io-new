@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Viral.io</title>
-    <link rel="stylesheet" href="/styles/styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Viral.io - Sign Up</title>
 </head>
 <body>
-    <header>
-        <h1>Create an account on Viral.io</h1>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/login">Login</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <form id="signup-form">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit">Sign Up</button>
-        </form>
-    </main>
-    <footer>
-        <p>&copy; 2024 Viral.io</p>
-    </footer>
-    <script src="/scripts/auth.js"></script>
+  <h1>Sign Up</h1>
+
+  <div id="sign-up-form">
+    <input type="email" id="sign-up-email" placeholder="Email">
+    <input type="password" id="sign-up-password" placeholder="Password">
+    <button id="sign-up-button">Sign Up</button>
+  </div>
+
+  <p>Already have an account? <a href="index.html">Sign In</a></p>
+
+  <!-- Link to Firebase Authentication -->
+  <script type="module" src="../Public/scripts/auth.js"></script>
+
+  <script type="module">
+    import { signUp } from '../Public/scripts/auth.js';
+
+    const signUpButton = document.getElementById('sign-up-button');
+    const signUpEmail = document.getElementById('sign-up-email');
+    const signUpPassword = document.getElementById('sign-up-password');
+
+    signUpButton.addEventListener('click', () => {
+      signUp(signUpEmail.value, signUpPassword.value);
+    });
+  </script>
 </body>
 </html>
